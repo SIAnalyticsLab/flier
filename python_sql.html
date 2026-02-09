@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Python to SQL: The Mental Mapping That Changes Everything | SI Analytics</title>
+  <meta name="description" content="A premium SI Analytics guide that maps familiar Python data analysis patterns to SQL querying equivalents." />
+
+  <style>
+    :root{
+      /* SI Analytics-inspired palette */
+      --teal:#0F766E;
+      --navy:#0F172A;
+      --slate:#334155;
+      --muted:#64748B;
+      --bg:#F8FAFC;
+      --card:#FFFFFF;
+      --line:#E2E8F0;
+      --gold:#FACC15;
+      --shadow: 0 18px 40px rgba(15, 23, 42, 0.10);
+      --radius: 18px;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:var(--sans);
+      color:var(--slate);
+      background:
+        radial-gradient(900px 380px at 20% 0%, rgba(15,118,110,0.10), transparent 60%),
+        radial-gradient(900px 380px at 95% 10%, rgba(15,23,42,0.10), transparent 55%),
+        linear-gradient(180deg, #FFFFFF 0%, var(--bg) 45%, #FFFFFF 100%);
+    }
+
+    a{color:var(--teal); text-decoration:none}
+    a:hover{text-decoration:underline}
+
+    .wrap{
+      max-width: 1020px;
+      margin: 0 auto;
+      padding: 44px 20px 70px;
+    }
+
+    .masthead{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      padding: 18px 18px;
+      background: rgba(255,255,255,0.70);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 10px 26px rgba(15, 23, 42, 0.06);
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      min-width: 240px;
+    }
+
+    .brand img{
+      width: 160px;
+      height: auto;
+      display:block;
+    }
+
+    .tag{
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: 0.02em;
+      margin-top: 4px;
+    }
+
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #FFFFFF;
+      color: var(--navy);
+      font-weight: 600;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+    .dot{
+      width: 9px; height: 9px; border-radius: 50%;
+      background: var(--teal);
+      box-shadow: 0 0 0 5px rgba(15,118,110,0.12);
+    }
+
+    header.article-hero{
+      margin-top: 22px;
+      padding: 34px 28px;
+      border-radius: var(--radius);
+      background:
+        linear-gradient(135deg, rgba(15,118,110,0.10) 0%, rgba(255,255,255,0.70) 35%, rgba(15,23,42,0.06) 100%),
+        #FFFFFF;
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow:hidden;
+    }
+
+    header.article-hero:before{
+      content:"";
+      position:absolute;
+      inset:-120px -180px auto auto;
+      width: 520px;
+      height: 320px;
+      background: radial-gradient(circle at 30% 30%, rgba(15,118,110,0.18), transparent 60%);
+      transform: rotate(12deg);
+      pointer-events:none;
+    }
+
+    .kicker{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--teal);
+    }
+
+    h1{
+      margin: 14px 0 10px;
+      font-size: clamp(28px, 3.4vw, 44px);
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+      color: var(--navy);
+    }
+
+    .lead{
+      margin: 10px 0 0;
+      font-size: 18px;
+      line-height: 1.6;
+      color: var(--slate);
+      max-width: 78ch;
+    }
+
+    .callout{
+      margin-top: 18px;
+      padding: 16px 16px;
+      border-radius: 16px;
+      border: 1px solid rgba(15,118,110,0.25);
+      background: rgba(15,118,110,0.08);
+      color: var(--navy);
+      font-weight: 650;
+    }
+
+    .content{
+      margin-top: 26px;
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 18px;
+    }
+
+    .card{
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+      padding: 24px 22px;
+    }
+
+    h2{
+      margin: 0 0 10px;
+      color: var(--navy);
+      font-size: 22px;
+      letter-spacing: -0.01em;
+    }
+
+    p{margin: 10px 0; line-height: 1.7}
+
+    .muted{color: var(--muted)}
+
+    .table-wrap{
+      overflow:auto;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      background: #FFFFFF;
+    }
+
+    table{
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      min-width: 760px;
+      font-size: 14px;
+    }
+
+    thead th{
+      position: sticky;
+      top: 0;
+      background: linear-gradient(180deg, rgba(15,23,42,0.96), rgba(15,23,42,0.92));
+      color: #FFFFFF;
+      text-align: left;
+      padding: 14px 14px;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border-bottom: 1px solid rgba(255,255,255,0.12);
+      z-index: 1;
+    }
+
+    tbody td{
+      vertical-align: top;
+      padding: 14px 14px;
+      border-bottom: 1px solid var(--line);
+      background: #FFFFFF;
+    }
+
+    tbody tr:nth-child(even) td{
+      background: #FBFDFF;
+    }
+
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--navy);
+      border: 1px solid var(--line);
+      background: #FFFFFF;
+      white-space:nowrap;
+    }
+    .badge .mini-dot{
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--teal);
+    }
+
+    pre{
+      margin: 0;
+      padding: 12px 12px;
+      border-radius: 12px;
+      background: #0B1220;
+      color: #E5E7EB;
+      border: 1px solid rgba(255,255,255,0.10);
+      overflow:auto;
+      font-family: var(--mono);
+      font-size: 13px;
+      line-height: 1.55;
+      white-space: pre;
+    }
+
+    .insight{
+      border-left: 4px solid var(--teal);
+      padding: 14px 14px;
+      border-radius: 14px;
+      background: rgba(15,118,110,0.06);
+    }
+
+    .insight h3{
+      margin: 0 0 6px;
+      color: var(--navy);
+      font-size: 16px;
+      letter-spacing: -0.01em;
+    }
+
+    .checklist{
+      display:grid;
+      gap:10px;
+      margin: 12px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+    .checklist li{
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      line-height: 1.55;
+    }
+    .check{
+      width: 18px; height: 18px; border-radius: 6px;
+      background: rgba(15,118,110,0.14);
+      border: 1px solid rgba(15,118,110,0.32);
+      position: relative;
+      flex: 0 0 18px;
+      margin-top: 2px;
+    }
+    .check:after{
+      content:"";
+      position:absolute;
+      left: 5px; top: 3px;
+      width: 6px; height: 10px;
+      border: solid var(--teal);
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+    }
+
+    .cta{
+      margin-top: 18px;
+      padding: 20px 18px;
+      border-radius: 18px;
+      border: 1px solid rgba(250,204,21,0.55);
+      background: linear-gradient(180deg, rgba(250,204,21,0.22), rgba(250,204,21,0.08));
+      color: var(--navy);
+    }
+
+    .cta strong{color: var(--navy)}
+    .cta .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      margin-top: 12px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      background: var(--navy);
+      color: #FFFFFF;
+      font-weight: 800;
+      letter-spacing: 0.01em;
+      border: 1px solid rgba(255,255,255,0.10);
+      text-decoration:none;
+    }
+    .cta .btn:hover{opacity:0.95; text-decoration:none}
+
+    footer{
+      margin-top: 22px;
+      padding: 18px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      text-align:center;
+    }
+
+    @media (max-width: 760px){
+      .brand img{width: 140px}
+      header.article-hero{padding: 28px 18px}
+      .card{padding: 20px 16px}
+      table{min-width: 640px}
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+
+    <!-- Masthead -->
+    <div class="masthead">
+      <div class="brand">
+        <!-- Place the SI Analytics logo file in your repo and update the path below.
+             Example: /assets/si-analytics-logo.jpg -->
+        <img src="https://github.com/SIAnalyticsLab/si-analytics-academy/blob/main/assets/logo.png" alt="SI Analytics Logo" />
+        <div class="tag">Empowering decisions, driving innovation</div>
+      </div>
+      <div class="pill"><span class="dot"></span> Python ↔ SQL Mapping Guide</div>
+    </div>
+
+    <!-- Hero -->
+    <header class="article-hero">
+      <div class="kicker">Practical Skill Transfer</div>
+      <h1>Python to SQL: Your Skills Transfer More Than You Think</h1>
+      <p class="lead">
+        Are you already good with Python for Data Analysis and Visualization and wondering if your skills are transferable
+        to querying databases and extracting data for deeper analysis?
+      </p>
+
+      <div class="callout">
+        If you understand Python, you are already halfway to mastering SQL.
+      </div>
+
+      <p class="muted" style="margin-top:12px;">
+        SQL is not a foreign language. It is a different dialect of logic you already use every day.
+        Below is a side-by-side translation of what you already know in Python and how the same logic appears in SQL.
+      </p>
+    </header>
+
+    <main class="content">
+
+      <!-- Table mapping -->
+      <section class="card">
+        <h2>🧠 Python ↔ SQL: The Mental Mapping That Changes Everything</h2>
+        <p class="muted" style="margin-top:6px;">
+          Think of this as a translation table. Same reasoning, different syntax, and often a different place in the pipeline.
+        </p>
+
+        <div class="table-wrap" aria-label="Python to SQL mapping table">
+          <table>
+            <thead>
+              <tr>
+                <th style="width:18%;">Concept</th>
+                <th style="width:32%;">Python</th>
+                <th style="width:32%;">SQL</th>
+                <th style="width:18%;">Key Insight</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="badge"><span class="mini-dot"></span>Selecting</span></td>
+                <td>
+                  <pre>df[['name', 'age', 'salary']]</pre>
+                </td>
+                <td>
+                  <pre>SELECT name, age, salary
+FROM employees;</pre>
+                </td>
+                <td>Same idea: choose columns.</td>
+              </tr>
+
+              <tr>
+                <td><span class="badge"><span class="mini-dot"></span>Filtering</span></td>
+                <td>
+                  <pre>df[df['age'] &gt; 30]</pre>
+                </td>
+                <td>
+                  <pre>SELECT *
+FROM employees
+WHERE age &gt; 30;</pre>
+                </td>
+                <td>Same logic. Different syntax.</td>
+              </tr>
+
+              <tr>
+                <td><span class="badge"><span class="mini-dot"></span>Conditionals</span></td>
+                <td>
+                  <pre>df['level'] = df['salary'].apply(
+    lambda x: 'Senior' if x &gt; 80000 else 'Junior'
+)</pre>
+                </td>
+                <td>
+                  <pre>SELECT salary,
+       CASE
+           WHEN salary &gt; 80000 THEN 'Senior'
+           ELSE 'Junior'
+       END AS level
+FROM employees;</pre>
+                </td>
+                <td>You already think this way.</td>
+              </tr>
+
+              <tr>
+                <td><span class="badge"><span class="mini-dot"></span>Aggregation</span></td>
+                <td>
+                  <pre>df.groupby('department')['salary'].mean()</pre>
+                </td>
+                <td>
+                  <pre>SELECT department, AVG(salary)
+FROM employees
+GROUP BY department;</pre>
+                </td>
+                <td>Same aggregation mindset.</td>
+              </tr>
+
+              <tr>
+                <td><span class="badge"><span class="mini-dot"></span>Joins</span></td>
+                <td>
+                  <pre>pd.merge(emp, dept, on='dept_id')</pre>
+                </td>
+                <td>
+                  <pre>SELECT *
+FROM employees e
+JOIN departments d
+ON e.dept_id = d.dept_id;</pre>
+                </td>
+                <td>Joins are merges with rules.</td>
+              </tr>
+
+              <tr>
+                <td><span class="badge"><span class="mini-dot"></span>Window</span></td>
+                <td>
+                  <pre>df['rank'] = df.groupby('department')['salary'].rank()</pre>
+                </td>
+                <td>
+                  <pre>SELECT *,
+       RANK() OVER (PARTITION BY department ORDER BY salary) AS rank
+FROM employees;</pre>
+                </td>
+                <td>Same analytical thinking, expressed earlier in the pipeline.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Big insight -->
+      <section class="card">
+        <div class="insight">
+          <h3>🔑 The Big Insight</h3>
+          <p style="margin:8px 0 0;">
+            SQL tells the database what to return. Python decides what to do next.
+          </p>
+          <p style="margin:8px 0 0;">
+            The most effective data professionals do not choose between them. They combine both.
+          </p>
+          <p style="margin:8px 0 0;">
+            SQL for efficient extraction. Python for transformation, modeling, visualization, and automation.
+          </p>
+        </div>
+      </section>
+
+      <!-- Level up CTA -->
+      <section class="card">
+        <h2>🚀 Ready to Level Up?</h2>
+        <p class="muted">
+          If you already use Python for data analysis and want to:
+        </p>
+
+        <ul class="checklist">
+          <li><span class="check"></span><span>Confidently pull data from databases</span></li>
+          <li><span class="check"></span><span>Combine SQL querying with Pandas workflows</span></li>
+          <li><span class="check"></span><span>Build end-to-end, production-ready analytics pipelines</span></li>
+        </ul>
+
+        <div class="cta">
+          <strong>Check out our transformational Python for Data Analysis and Visualization Bootcamp</strong><br />
+          <span class="muted">You already have the foundation. Now it’s time to connect the dots.</span><br />
+          <a class="btn" href="https://www.sianalytics.org" target="_blank" rel="noopener noreferrer">
+            Visit www.sianalytics.org
+          </a>
+        </div>
+      </section>
+
+    </main>
+
+    <footer>
+      © <span id="year"></span> SI Analytics. All rights reserved.
+    </footer>
+  </div>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
