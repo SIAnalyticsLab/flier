@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Python to SQL: The Mental Mapping That Changes Everything | SI Analytics</title>
+  <meta name="description" content="Learn how familiar Python data analysis patterns map directly to SQL querying logic. A premium SI Analytics guide." />
+
+  <style>
+    :root {
+      --teal: #0F766E;
+      --navy: #0F172A;
+      --navy-deep: #020617;
+      --slate: #334155;
+      --muted: #64748B;
+      --bg: #F8FAFC;
+      --card: #FFFFFF;
+      --line: #E2E8F0;
+      --gold: #FACC15;
+      --radius: 18px;
+      --shadow: 0 18px 40px rgba(2, 6, 23, 0.12);
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Courier New", monospace;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: var(--sans);
+      color: var(--slate);
+      background: var(--bg);
+    }
+
+    a { color: var(--teal); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .container {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 48px 20px 80px;
+    }
+
+    /* Header */
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 32px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand img {
+      height: 44px;
+    }
+
+    .tagline {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    /* Hero */
+    .hero {
+      background: linear-gradient(135deg, var(--navy-deep), var(--teal));
+      color: #FFFFFF;
+      border-radius: 28px;
+      padding: 64px 40px;
+      box-shadow: var(--shadow);
+      margin-bottom: 48px;
+    }
+
+    .hero h1 {
+      font-size: clamp(32px, 4vw, 48px);
+      line-height: 1.15;
+      margin: 0 0 16px;
+      letter-spacing: -0.02em;
+    }
+
+    .hero p {
+      max-width: 760px;
+      font-size: 18px;
+      line-height: 1.6;
+      color: #E5E7EB;
+    }
+
+    .hero .highlight {
+      margin-top: 20px;
+      background: rgba(255,255,255,0.12);
+      padding: 16px 18px;
+      border-radius: 14px;
+      font-weight: 600;
+    }
+
+    /* Cards */
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 32px 28px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--line);
+      margin-bottom: 32px;
+    }
+
+    h2 {
+      margin-top: 0;
+      font-size: 24px;
+      color: var(--navy);
+    }
+
+    p {
+      line-height: 1.7;
+      margin: 12px 0;
+    }
+
+    .muted { color: var(--muted); }
+
+    /* Table */
+    .table-wrap {
+      overflow-x: auto;
+      margin-top: 20px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 760px;
+      font-size: 14px;
+    }
+
+    thead th {
+      background: var(--navy);
+      color: #FFFFFF;
+      text-align: left;
+      padding: 14px;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    tbody td {
+      padding: 14px;
+      vertical-align: top;
+      border-top: 1px solid var(--line);
+      background: #FFFFFF;
+    }
+
+    tbody tr:nth-child(even) td {
+      background: #F9FBFD;
+    }
+
+    pre {
+      margin: 0;
+      padding: 12px;
+      background: #020617;
+      color: #E5E7EB;
+      border-radius: 10px;
+      font-family: var(--mono);
+      font-size: 13px;
+      line-height: 1.55;
+      overflow-x: auto;
+    }
+
+    /* Insight */
+    .insight {
+      border-left: 4px solid var(--teal);
+      padding-left: 16px;
+    }
+
+    /* Checklist */
+    ul.checklist {
+      list-style: none;
+      padding: 0;
+      margin: 16px 0 0;
+    }
+
+    ul.checklist li {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    ul.checklist li::before {
+      content: "✓";
+      color: var(--teal);
+      font-weight: 700;
+    }
+
+    /* CTA */
+    .cta {
+      background: linear-gradient(180deg, rgba(250,204,21,0.25), rgba(250,204,21,0.08));
+      border-radius: 18px;
+      padding: 28px;
+      border: 1px solid rgba(250,204,21,0.5);
+      margin-top: 24px;
+    }
+
+    .cta a {
+      display: inline-block;
+      margin-top: 14px;
+      padding: 14px 20px;
+      background: var(--navy);
+      color: #FFFFFF;
+      border-radius: 12px;
+      font-weight: 700;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+
+    <div class="topbar">
+      <div class="brand">
+        <img src="https://raw.githubusercontent.com/SIAnalyticsLab/si-analytics-academy/main/assets/logo.png" alt="SI Analytics Logo">
+        <div class="tagline">Empowering decisions, driving innovation</div>
+      </div>
+    </div>
+
+    <section class="hero">
+      <h1>Python to SQL: The Mental Mapping That Changes Everything</h1>
+      <p>
+        Are you already good with Python for Data Analysis and Visualization and wondering if your skills are transferable
+        to querying databases and extracting data for deeper analysis?
+      </p>
+      <div class="highlight">
+        If you understand Python, you are already halfway to mastering SQL.
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>🧠 Python ↔ SQL: Side-by-Side Translation</h2>
+      <p class="muted">
+        Same reasoning. Different syntax. Often a different place in the analytics pipeline.
+      </p>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Concept</th>
+              <th>Python</th>
+              <th>SQL</th>
+              <th>Insight</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Selecting data</td>
+              <td><pre>df[['name','age','salary']]</pre></td>
+              <td><pre>SELECT name, age, salary
+FROM employees;</pre></td>
+              <td>Explicit column selection</td>
+            </tr>
+            <tr>
+              <td>Filtering rows</td>
+              <td><pre>df[df['age'] &gt; 30]</pre></td>
+              <td><pre>SELECT *
+FROM employees
+WHERE age &gt; 30;</pre></td>
+              <td>Same conditional logic</td>
+            </tr>
+            <tr>
+              <td>Conditional logic</td>
+              <td><pre>lambda x: 'Senior' if x &gt; 80000 else 'Junior'</pre></td>
+              <td><pre>CASE WHEN salary &gt; 80000
+THEN 'Senior' ELSE 'Junior' END</pre></td>
+              <td>You already think in CASE statements</td>
+            </tr>
+            <tr>
+              <td>Aggregation</td>
+              <td><pre>groupby().mean()</pre></td>
+              <td><pre>GROUP BY department</pre></td>
+              <td>Identical summarization mindset</td>
+            </tr>
+            <tr>
+              <td>Joins</td>
+              <td><pre>pd.merge()</pre></td>
+              <td><pre>JOIN ... ON</pre></td>
+              <td>Merges with explicit rules</td>
+            </tr>
+            <tr>
+              <td>Window functions</td>
+              <td><pre>groupby().rank()</pre></td>
+              <td><pre>RANK() OVER(PARTITION BY)</pre></td>
+              <td>Advanced analytics upstream</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="card insight">
+      <h2>🔑 The Big Insight</h2>
+      <p>SQL tells the database what to return.</p>
+      <p>Python decides what to do next.</p>
+      <p>The strongest analysts combine both.</p>
+    </section>
+
+    <section class="card">
+      <h2>🚀 Ready to Level Up?</h2>
+      <ul class="checklist">
+        <li>Confidently pull data from databases</li>
+        <li>Combine SQL querying with Pandas workflows</li>
+        <li>Build end-to-end, production-ready analytics pipelines</li>
+      </ul>
+
+      <div class="cta">
+        <strong>Explore our Python for Data Analysis & Visualization Bootcamp</strong><br>
+        <span class="muted">You already have the foundation. Now connect the dots.</span><br>
+        <a href="https://www.sianalytics.org" target="_blank">Visit www.sianalytics.org</a>
+      </div>
+    </section>
+
+    <footer>
+      © <span id="year"></span> SI Analytics
+    </footer>
+
+  </div>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
