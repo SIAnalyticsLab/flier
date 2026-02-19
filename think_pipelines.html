@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pandas Is Not Enough: Thinking in Pipelines, Not Notebooks | SI Analytics</title>
+  <meta name="description" content="A premium SI Analytics bulletin on shifting from notebooks to pipelines for production-ready analytics." />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Pandas Is Not Enough: Thinking in Pipelines, Not Notebooks" />
+  <meta property="og:description" content="A premium SI Analytics bulletin on shifting from notebooks to pipelines for production-ready analytics." />
+  <meta property="og:type" content="article" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg: #070A12;
+      --surface: rgba(15, 23, 42, 0.72); /* deep navy glass */
+      --surface-2: rgba(15, 23, 42, 0.92);
+      --card: rgba(2, 6, 23, 0.72);
+      --border: rgba(148, 163, 184, 0.18);
+      --text: #EAF2FF;
+      --muted: rgba(226, 232, 240, 0.78);
+      --muted-2: rgba(226, 232, 240, 0.60);
+      --teal: #0F766E;
+      --teal-2: #14B8A6;
+      --gold: #FACC15;
+      --ink: #0F172A;
+      --shadow: 0 16px 40px rgba(0,0,0,0.40);
+      --shadow-soft: 0 10px 24px rgba(0,0,0,0.28);
+      --radius: 18px;
+      --radius-2: 22px;
+      --max: 1120px;
+    }
+
+    *{ box-sizing: border-box; }
+    html, body{ height: 100%; }
+    body{
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background:
+        radial-gradient(900px 420px at 10% 10%, rgba(20, 184, 166, 0.18), transparent 60%),
+        radial-gradient(800px 520px at 85% 18%, rgba(250, 204, 21, 0.12), transparent 55%),
+        radial-gradient(1000px 700px at 55% 95%, rgba(15, 118, 110, 0.16), transparent 60%),
+        linear-gradient(180deg, #050712 0%, #060815 45%, #050713 100%);
+      color: var(--text);
+      line-height: 1.65;
+    }
+
+    a{ color: var(--teal-2); text-decoration: none; }
+    a:hover{ text-decoration: underline; }
+
+    /* Layout */
+    .wrap{
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 28px 18px 60px;
+    }
+
+    /* Top Nav */
+    .topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 16px;
+      padding: 14px 16px;
+      border: 1px solid var(--border);
+      background: rgba(2,6,23,0.50);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-soft);
+      backdrop-filter: blur(12px);
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap: 12px;
+      min-width: 220px;
+    }
+
+    .logo{
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      border: 1px solid rgba(250,204,21,0.22);
+      background:
+        radial-gradient(circle at 30% 30%, rgba(250,204,21,0.28), transparent 52%),
+        radial-gradient(circle at 60% 65%, rgba(20,184,166,0.26), transparent 58%),
+        linear-gradient(180deg, rgba(15,23,42,0.9), rgba(2,6,23,0.9));
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      box-shadow: 0 10px 24px rgba(0,0,0,0.35);
+      flex: 0 0 auto;
+    }
+    .logo svg{ opacity: 0.95; }
+
+    .brand .name{
+      display:flex;
+      flex-direction:column;
+      gap: 2px;
+    }
+    .brand .name strong{
+      font-weight: 800;
+      letter-spacing: 0.2px;
+      font-size: 14px;
+    }
+    .brand .name span{
+      font-size: 12px;
+      color: var(--muted-2);
+    }
+
+    .topbar .actions{
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content:flex-end;
+    }
+
+    .pill{
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.2px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(15,23,42,0.45);
+      color: var(--muted);
+      display:inline-flex;
+      gap: 8px;
+      align-items:center;
+    }
+    .pill b{
+      color: var(--text);
+      font-weight: 700;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(20,184,166,0.35);
+      background: linear-gradient(180deg, rgba(15,118,110,0.18), rgba(15,118,110,0.10));
+      color: var(--text);
+      font-weight: 700;
+      font-size: 13px;
+      box-shadow: 0 10px 22px rgba(0,0,0,0.25);
+      transition: transform 0.15s ease, border-color 0.15s ease;
+    }
+    .btn:hover{
+      transform: translateY(-1px);
+      border-color: rgba(20,184,166,0.55);
+      text-decoration:none;
+    }
+    .btn.secondary{
+      border: 1px solid rgba(250,204,21,0.32);
+      background: linear-gradient(180deg, rgba(250,204,21,0.12), rgba(250,204,21,0.06));
+    }
+
+    /* Hero */
+    .hero{
+      margin-top: 18px;
+      border-radius: var(--radius-2);
+      border: 1px solid rgba(148,163,184,0.18);
+      background:
+        radial-gradient(1100px 520px at 15% 15%, rgba(20,184,166,0.22), transparent 60%),
+        radial-gradient(900px 600px at 85% 20%, rgba(250,204,21,0.14), transparent 55%),
+        linear-gradient(180deg, rgba(15,23,42,0.78), rgba(2,6,23,0.78));
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      position: relative;
+    }
+
+    .hero::before{
+      content:"";
+      position:absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, rgba(15,118,110,0.10), transparent 40%),
+        linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.22) 100%);
+      pointer-events:none;
+    }
+
+    .hero-inner{
+      position: relative;
+      padding: 34px 26px 26px;
+      display:grid;
+      grid-template-columns: 1.25fr 0.75fr;
+      gap: 22px;
+      align-items: start;
+    }
+
+    .kicker{
+      display:inline-flex;
+      gap: 10px;
+      align-items:center;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(250,204,21,0.30);
+      background: rgba(250,204,21,0.10);
+      font-weight: 800;
+      font-size: 12px;
+      letter-spacing: 0.3px;
+      color: rgba(255,255,255,0.92);
+      width: fit-content;
+    }
+    .kicker .dot{
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--gold);
+      box-shadow: 0 0 0 6px rgba(250,204,21,0.10);
+    }
+
+    h1{
+      margin: 12px 0 10px;
+      font-size: 36px;
+      line-height: 1.18;
+      letter-spacing: -0.4px;
+    }
+
+    .subtitle{
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+      max-width: 56ch;
+    }
+
+    .hero-meta{
+      display:flex;
+      flex-direction:column;
+      gap: 12px;
+      padding: 16px;
+      border-radius: 16px;
+      border: 1px solid rgba(148,163,184,0.18);
+      background: rgba(2,6,23,0.55);
+      backdrop-filter: blur(10px);
+    }
+    .hero-meta .row{
+      display:flex;
+      justify-content:space-between;
+      gap: 12px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .hero-meta .row b{
+      color: var(--text);
+      font-weight: 800;
+    }
+    .hero-meta .tag{
+      display:flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 2px;
+    }
+    .chip{
+      padding: 7px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(15,23,42,0.45);
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    /* Main */
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr 360px;
+      gap: 18px;
+      margin-top: 18px;
+      align-items: start;
+    }
+
+    .content{
+      border-radius: var(--radius-2);
+      border: 1px solid rgba(148,163,184,0.18);
+      background: rgba(2,6,23,0.58);
+      box-shadow: var(--shadow-soft);
+      backdrop-filter: blur(10px);
+      overflow:hidden;
+    }
+
+    .content-inner{
+      padding: 26px;
+    }
+
+    h2{
+      margin: 22px 0 10px;
+      font-size: 20px;
+      line-height: 1.25;
+      letter-spacing: -0.2px;
+    }
+
+    p{ margin: 10px 0; color: rgba(234,242,255,0.92); }
+    .lead{
+      font-size: 16px;
+      color: var(--muted);
+    }
+
+    .quote{
+      margin: 18px 0;
+      padding: 16px 16px;
+      border-radius: 16px;
+      border: 1px solid rgba(20,184,166,0.25);
+      background: linear-gradient(180deg, rgba(15,118,110,0.14), rgba(2,6,23,0.20));
+      position: relative;
+    }
+    .quote b{ color: var(--text); }
+    .quote .mark{
+      position:absolute;
+      top: 12px;
+      right: 14px;
+      opacity: 0.35;
+      font-weight: 900;
+      font-size: 28px;
+      color: rgba(250,204,21,0.75);
+    }
+
+    .flow{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin: 16px 0 6px;
+    }
+    .flow .box{
+      border-radius: 16px;
+      border: 1px solid rgba(148,163,184,0.18);
+      background: rgba(15,23,42,0.55);
+      padding: 14px;
+    }
+    .flow .box h3{
+      margin: 0 0 8px;
+      font-size: 13px;
+      letter-spacing: 0.2px;
+      text-transform: uppercase;
+      color: rgba(226,232,240,0.80);
+    }
+    .flow .seq{
+      font-weight: 800;
+      font-size: 14px;
+      letter-spacing: 0.1px;
+      color: var(--text);
+    }
+    .flow .seq .arrow{
+      color: rgba(250,204,21,0.90);
+      padding: 0 6px;
+      font-weight: 900;
+    }
+
+    /* Lists */
+    ul{
+      margin: 10px 0 10px 18px;
+      color: rgba(234,242,255,0.92);
+    }
+    li{ margin: 6px 0; color: rgba(234,242,255,0.92); }
+    .bullets{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin: 12px 0;
+    }
+    .bullet{
+      display:flex;
+      gap: 12px;
+      padding: 12px 12px;
+      border-radius: 16px;
+      border: 1px solid rgba(148,163,184,0.18);
+      background: rgba(15,23,42,0.45);
+    }
+    .bullet .icon{
+      width: 34px;
+      height: 34px;
+      border-radius: 12px;
+      background: rgba(20,184,166,0.16);
+      border: 1px solid rgba(20,184,166,0.30);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      flex: 0 0 auto;
+    }
+    .bullet .icon svg{ opacity: 0.95; }
+    .bullet .text{
+      display:flex;
+      flex-direction:column;
+      gap: 2px;
+    }
+    .bullet .text b{
+      font-weight: 800;
+      font-size: 13px;
+      letter-spacing: 0.1px;
+    }
+    .bullet .text span{
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    /* Code blocks */
+    pre{
+      margin: 14px 0;
+      padding: 14px 14px;
+      border-radius: 16px;
+      border: 1px solid rgba(148,163,184,0.18);
+      background: rgba(2,6,23,0.78);
+      overflow:auto;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.02);
+    }
+    code{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 12.5px;
+      color: rgba(226,232,240,0.92);
+    }
+    .inline{
+      padding: 2px 6px;
+      border-radius: 8px;
+      border: 1px solid rgba(148,163,184,0.20);
+      background: rgba(15,23,42,0.55);
+      font-size: 12.5px;
+    }
+
+    /* Callouts */
+    .callout{
+      margin: 18px 0;
+      border-radius: 18px;
+      border: 1px solid rgba(250,204,21,0.26);
+      background: linear-gradient(180deg, rgba(250,204,21,0.10), rgba(2,6,23,0.22));
+      padding: 16px;
+    }
+    .callout h3{
+      margin: 0 0 8px;
+      font-size: 14px;
+      letter-spacing: 0.2px;
+    }
+    .callout p{ margin: 0; color: var(--muted); }
+
+    /* Sidebar */
+    .side{
+      display:flex;
+      flex-direction:column;
+      gap: 14px;
+      position: sticky;
+      top: 18px;
+    }
+
+    .panel{
+      border-radius: var(--radius-2);
+      border: 1px solid rgba(148,163,184,0.18);
+      background: rgba(2,6,23,0.58);
+      box-shadow: var(--shadow-soft);
+      backdrop-filter: blur(10px);
+      overflow:hidden;
+    }
+    .panel .hd{
+      padding: 14px 14px 12px;
+      border-bottom: 1px solid rgba(148,163,184,0.16);
+      background: rgba(15,23,42,0.55);
+      font-weight: 900;
+      letter-spacing: 0.2px;
+      font-size: 13px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 10px;
+    }
+    .panel .bd{
+      padding: 14px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .toc a{
+      display:block;
+      padding: 8px 10px;
+      border-radius: 12px;
+      border: 1px solid rgba(148,163,184,0.14);
+      background: rgba(15,23,42,0.40);
+      margin: 8px 0;
+      color: rgba(226,232,240,0.88);
+      font-weight: 700;
+      font-size: 12.5px;
+    }
+    .toc a:hover{
+      border-color: rgba(20,184,166,0.45);
+      text-decoration:none;
+    }
+
+    .cta{
+      display:flex;
+      flex-direction:column;
+      gap: 10px;
+    }
+    .cta .big{
+      font-size: 13px;
+      color: var(--muted);
+      margin: 0;
+    }
+    .cta .link{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 10px;
+      padding: 12px 12px;
+      border-radius: 16px;
+      border: 1px solid rgba(20,184,166,0.35);
+      background: rgba(15,118,110,0.14);
+      color: rgba(234,242,255,0.96);
+      font-weight: 900;
+    }
+    .cta .link:hover{ text-decoration:none; border-color: rgba(20,184,166,0.55); }
+
+    /* Footer */
+    footer{
+      margin-top: 18px;
+      padding: 18px 16px;
+      border-radius: var(--radius);
+      border: 1px solid rgba(148,163,184,0.18);
+      background: rgba(2,6,23,0.50);
+      color: var(--muted-2);
+      font-size: 12px;
+      text-align:center;
+    }
+
+    /* Responsive */
+    @media (max-width: 980px){
+      .hero-inner{ grid-template-columns: 1fr; }
+      .grid{ grid-template-columns: 1fr; }
+      .side{ position: relative; top: auto; }
+    }
+    @media (max-width: 520px){
+      h1{ font-size: 28px; }
+      .content-inner{ padding: 18px; }
+      .hero-inner{ padding: 22px 18px; }
+      .flow{ grid-template-columns: 1fr; }
+      .topbar{ align-items:flex-start; flex-direction:column; }
+      .topbar .actions{ justify-content:flex-start; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="brand">
+        <div class="logo" aria-label="SI Analytics">
+          <!-- Minimal SI-style glyph -->
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M6 15.5c1.2 1.5 3.2 2.5 6 2.5 4.2 0 6-2.2 6-4.2 0-2.4-2.3-3.3-5.2-3.9-2.6-.5-4.8-1-4.8-2.5C8 5.6 9.7 4.6 12 4.6c2 0 3.7.6 5 1.8" stroke="rgba(250,204,21,0.95)" stroke-width="2" stroke-linecap="round"/>
+            <path d="M6 19.2V4.8" stroke="rgba(20,184,166,0.90)" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="name">
+          <strong>SI Analytics</strong>
+          <span>Insights &amp; Learning Bulletin</span>
+        </div>
+      </div>
+
+      <div class="actions">
+        <span class="pill"><b>Series</b> Data Analysis &amp; Engineering Mindset</span>
+        <span class="pill"><b>Reading</b> 7 to 9 min</span>
+        <a class="btn secondary" href="#ready">Explore Pathways</a>
+        <a class="btn" href="#toc">Jump to Sections</a>
+      </div>
+    </div>
+
+    <section class="hero">
+      <div class="hero-inner">
+        <div>
+          <div class="kicker"><span class="dot"></span>Professional Growth Bulletin</div>
+          <h1>Pandas Is Not Enough: Thinking in Pipelines, Not Notebooks</h1>
+          <p class="subtitle">
+            Many analysts plateau not because they lack skill, but because they stop at the notebook. The shift from
+            exploratory analysis to production-ready systems is an engineering mindset.
+          </p>
+
+          <div class="quote" style="margin-top:18px;">
+            <div class="mark">“</div>
+            <b>A notebook demonstrates insight.</b><br/>
+            <b>A pipeline operationalizes insight.</b><br/>
+            <span style="color: rgba(226,232,240,0.78); font-size: 13px;">The distinction determines whether you remain exploratory or evolve into production-ready delivery.</span>
+          </div>
+
+          <div class="flow" aria-label="workflow comparison">
+            <div class="box">
+              <h3>Notebook pattern</h3>
+              <div class="seq">Load <span class="arrow">→</span> Clean <span class="arrow">→</span> Plot <span class="arrow">→</span> Done</div>
+            </div>
+            <div class="box">
+              <h3>Pipeline mindset</h3>
+              <div class="seq">Extract <span class="arrow">→</span> Validate <span class="arrow">→</span> Transform <span class="arrow">→</span> Model <span class="arrow">→</span> Visualize <span class="arrow">→</span> Deploy</div>
+            </div>
+          </div>
+        </div>
+
+        <aside class="hero-meta">
+          <div class="row"><span>Bulletin</span><b>Pipeline Thinking</b></div>
+          <div class="row"><span>Audience</span><b>Analysts to Leads</b></div>
+          <div class="row"><span>Tools</span><b>Python, Pandas, Git</b></div>
+          <div class="tag">
+            <span class="chip">Reproducibility</span>
+            <span class="chip">Maintainability</span>
+            <span class="chip">Deployment</span>
+            <span class="chip">Observability</span>
+          </div>
+          <div class="callout" style="margin: 8px 0 0;">
+            <h3>Core thesis</h3>
+            <p>Foundation alone does not build systems. Market value compounds when your work becomes repeatable, reliable, and runnable without you.</p>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <div class="grid">
+      <main class="content">
+        <div class="content-inner">
+          <div id="toc"></div>
+
+          <p class="lead">
+            If you are already comfortable with Pandas, <span class="inline">groupby</span> logic, visualization libraries,
+            and transformation workflows, you have a strong foundation. But foundation alone does not build systems.
+          </p>
+
+          <h2 id="comfort">The Notebook Comfort Zone</h2>
+          <p>
+            Let us be honest. Most analysts work like this. It is efficient for discovery, fast for iteration, and excellent
+            for learning.
+          </p>
+
+          <pre><code>import pandas as pd
+
+df = pd.read_csv("sales.csv")
+df = df.dropna()
+df['revenue'] = df['price'] * df['quantity']
+df.groupby('region')['revenue'].sum().plot(kind='bar')</code></pre>
+
+          <p>
+            Insight achieved. Chart generated. Story told.
+          </p>
+
+          <div class="callout">
+            <h3>Ask the questions pipelines demand</h3>
+            <p>
+              Can this workflow run automatically next week? Can another analyst reproduce this without your intervention?
+              Can it handle 10 million rows from a database instead of a CSV? Can it log errors if the file schema changes?
+              Can it be deployed to run nightly?
+            </p>
+          </div>
+
+          <p>
+            If the answer is no, you built insight. You did not build infrastructure.
+          </p>
+
+          <h2 id="layers">What a Pipeline Thinks About That a Notebook Ignores</h2>
+          <p>
+            A pipeline forces you to consider layers. Each layer isolates responsibility, improves maintainability, and enables
+            scale. This is where you transition from analysis to analytics capability.
+          </p>
+
+          <div class="bullets">
+            <div class="bullet">
+              <div class="icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                  <path d="M6 7h12M6 12h12M6 17h12" stroke="rgba(20,184,166,0.95)" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div class="text">
+                <b>Extraction</b>
+                <span>Define how data enters your workflow: database, API, warehouse, cloud storage.</span>
+              </div>
+            </div>
+
+            <div class="bullet">
+              <div class="icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                  <path d="M12 3l9 4.5-9 4.5-9-4.5L12 3Z" stroke="rgba(250,204,21,0.95)" stroke-width="2" stroke-linejoin="round"/>
+                  <path d="M3 12l9 4.5 9-4.5" stroke="rgba(250,204,21,0.75)" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div class="text">
+                <b>Validation</b>
+                <span>Confirm schema, types, ranges, and assumptions before transformation begins.</span>
+              </div>
+            </div>
+
+            <div class="bullet">
+              <div class="icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                  <path d="M4 7h16M7 7v10a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V7" stroke="rgba(20,184,166,0.95)" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div class="text">
+                <b>Transformation</b>
+                <span>Encapsulate cleaning, feature engineering, and standardization into reusable functions.</span>
+              </div>
+            </div>
+
+            <div class="bullet">
+              <div class="icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                  <path d="M4 18V6M4 18h16M8 14l3-3 3 2 4-5" stroke="rgba(250,204,21,0.95)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="text">
+                <b>Modeling and outputs</b>
+                <span>Aggregate, model, visualize, and publish outputs with traceable logic and stable interfaces.</span>
+              </div>
+            </div>
+          </div>
+
+          <h2 id="extract">1. Extraction Layer</h2>
+          <p>
+            Where does data originate? Database, API, cloud storage, or data warehouse? Instead of calling
+            <span class="inline">pd.read_csv</span> inside your analysis, isolate it.
+          </p>
+
+          <pre><code># Instead of:
+# pd.read_csv("sales.csv")
+
+def extract_data(connection_string):
+    query = "SELECT * FROM sales"
+    return pd.read_sql(query, connection_string)</code></pre>
+
+          <p>
+            The difference is subtle but powerful. You have separated data source logic from analysis logic.
+          </p>
+
+          <h2 id="validate">2. Validation Layer</h2>
+          <p>
+            Pipelines validate assumptions before proceeding. In notebooks, errors surprise you. In pipelines, errors are anticipated.
+          </p>
+
+          <pre><code>def validate_schema(df):
+    expected_columns = ['price', 'quantity', 'region']
+    missing = [col for col in expected_columns if col not in df.columns]
+    if missing:
+        raise ValueError(f"Missing columns: {missing}")
+    return
