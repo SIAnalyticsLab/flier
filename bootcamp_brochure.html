@@ -1,0 +1,2683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Accelerated Data Analytics Bootcamp — SI Analytics</title>
+<!--
+=============================================================
+SI ANALYTICS — ACCELERATED DATA ANALYTICS BOOTCAMP
+Curriculum Brochure
+=============================================================
+HOW TO EXPORT AS PDF:
+1. Open this file in Google Chrome or Microsoft Edge.
+2. Press Ctrl+P (Windows) or Cmd+P (Mac) to open Print.
+3. Set Destination to "Save as PDF".
+4. Set Paper size to A4, Orientation to Portrait.
+5. Under "More settings", set Margins to None.
+6. Enable "Background graphics".
+7. Click Save.
+=============================================================
+-->
+<style>
+  /* =========================================================
+     CSS VARIABLES — BRAND PALETTE & TYPOGRAPHY
+  ========================================================= */
+  :root {
+    --navy:       #0D1B3E;
+    --navy-mid:   #122150;
+    --teal:       #1A7F7A;
+    --teal-light: #22A99F;
+    --teal-pale:  #E6F4F3;
+    --gold:       #C8973A;
+    --white:      #FFFFFF;
+    --off-white:  #F7F8FA;
+    --neutral:    #EEF0F4;
+    --text-dark:  #1A1F2E;
+    --text-mid:   #3D4459;
+    --text-light: #6B7494;
+    --border:     #D6DAE8;
+
+    --page-w: 210mm;
+    --page-h: 297mm;
+    --safe-h: 267mm;
+    --pad-x: 18mm;
+    --pad-y: 16mm;
+
+    --font-sans: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    --font-head: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  }
+
+  /* =========================================================
+     RESET & BASE
+  ========================================================= */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { font-size: 10pt; }
+  body {
+    font-family: var(--font-sans);
+    color: var(--text-dark);
+    background: #CBD0DC;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* =========================================================
+     PAGE SHELL
+  ========================================================= */
+  .page {
+    width: var(--page-w);
+    min-height: var(--page-h);
+    background: var(--white);
+    margin: 8mm auto;
+    position: relative;
+    overflow: hidden;
+    page-break-after: always;
+    break-after: page;
+  }
+  .page:last-child { page-break-after: avoid; break-after: avoid; }
+
+  /* =========================================================
+     HEADER / FOOTER STRIPS
+  ========================================================= */
+  .page-header {
+    background: var(--navy);
+    height: 9mm;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 var(--pad-x);
+  }
+  .page-header .hdr-brand {
+    color: var(--teal-light);
+    font-size: 7pt;
+    font-weight: 600;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+  }
+  .page-header .hdr-title {
+    color: rgba(255,255,255,.55);
+    font-size: 6.5pt;
+    letter-spacing: .04em;
+  }
+  .page-footer {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 8mm;
+    background: var(--navy);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 var(--pad-x);
+  }
+  .page-footer .ftr-left {
+    color: rgba(255,255,255,.5);
+    font-size: 6.5pt;
+  }
+  .page-footer .ftr-right {
+    color: var(--teal-light);
+    font-size: 6.5pt;
+    font-weight: 600;
+  }
+  .page-num {
+    color: rgba(255,255,255,.7);
+    font-size: 6.5pt;
+  }
+
+  /* =========================================================
+     CONTENT AREA (inside page, between header and footer)
+  ========================================================= */
+  .content {
+    padding: var(--pad-y) var(--pad-x);
+    padding-bottom: 14mm;
+  }
+  .content-full { padding: 0; }
+
+  /* =========================================================
+     TYPOGRAPHY HELPERS
+  ========================================================= */
+  .section-eyebrow {
+    font-size: 7pt;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 3mm;
+  }
+  .section-title {
+    font-size: 18pt;
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1.2;
+    margin-bottom: 4mm;
+  }
+  .section-title-sm {
+    font-size: 13pt;
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1.25;
+    margin-bottom: 3mm;
+  }
+  .section-intro {
+    font-size: 9.5pt;
+    color: var(--text-mid);
+    line-height: 1.65;
+    margin-bottom: 5mm;
+  }
+  .lead {
+    font-size: 10.5pt;
+    font-weight: 500;
+    color: var(--navy);
+    line-height: 1.6;
+    margin-bottom: 5mm;
+  }
+  p { font-size: 9pt; line-height: 1.65; color: var(--text-mid); margin-bottom: 3mm; }
+  ul { padding-left: 4mm; margin-bottom: 3mm; }
+  ul li {
+    font-size: 8.5pt;
+    line-height: 1.6;
+    color: var(--text-mid);
+    margin-bottom: 1mm;
+    list-style: none;
+    padding-left: 4mm;
+    position: relative;
+  }
+  ul li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: var(--teal);
+    font-size: 7pt;
+    top: 1pt;
+  }
+  strong { color: var(--text-dark); font-weight: 600; }
+
+  /* =========================================================
+     DIVIDERS
+  ========================================================= */
+  .divider {
+    border: none;
+    border-top: 0.3mm solid var(--border);
+    margin: 5mm 0;
+  }
+  .divider-teal {
+    border: none;
+    border-top: 0.6mm solid var(--teal);
+    margin: 4mm 0;
+    width: 20mm;
+  }
+
+  /* =========================================================
+     COVER PAGE
+  ========================================================= */
+  #cover {
+    background: var(--navy);
+    color: var(--white);
+  }
+  .cover-top-stripe {
+    background: var(--teal);
+    height: 2mm;
+  }
+  .cover-body {
+    padding: 14mm var(--pad-x) 0;
+    min-height: 200mm;
+  }
+  .cover-logo-area {
+    display: flex;
+    align-items: center;
+    gap: 3mm;
+    margin-bottom: 12mm;
+  }
+  .logo-svg-wrap svg { display: block; }
+  .cover-badge {
+    background: rgba(255,255,255,.08);
+    border: 0.3mm solid rgba(255,255,255,.2);
+    border-radius: 1mm;
+    padding: 1.5mm 4mm;
+    font-size: 7pt;
+    color: var(--teal-light);
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+  }
+  .cover-hero-img {
+    width: 100%;
+    height: 55mm;
+    background: linear-gradient(135deg, rgba(26,127,122,.25) 0%, rgba(13,27,62,.6) 100%),
+                url('https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=800&q=80') center/cover no-repeat;
+    border-radius: 2mm;
+    margin-bottom: 8mm;
+    display: flex;
+    align-items: flex-end;
+    padding: 5mm;
+    position: relative;
+  }
+  .cover-hero-caption {
+    font-size: 7.5pt;
+    color: rgba(255,255,255,.75);
+    font-style: italic;
+  }
+  .cover-title {
+    font-size: 26pt;
+    font-weight: 800;
+    color: var(--white);
+    line-height: 1.15;
+    margin-bottom: 4mm;
+  }
+  .cover-title span { color: var(--teal-light); }
+  .cover-descriptor {
+    font-size: 11.5pt;
+    font-weight: 600;
+    color: var(--gold);
+    margin-bottom: 6mm;
+    letter-spacing: .02em;
+  }
+  .cover-statement {
+    font-size: 9.5pt;
+    color: rgba(255,255,255,.78);
+    line-height: 1.65;
+    max-width: 155mm;
+    margin-bottom: 10mm;
+    border-left: 1mm solid var(--teal);
+    padding-left: 4mm;
+  }
+  .cover-pills {
+    display: flex;
+    gap: 3mm;
+    flex-wrap: wrap;
+    margin-bottom: 8mm;
+  }
+  .cover-pill {
+    background: rgba(26,127,122,.22);
+    border: 0.3mm solid var(--teal-light);
+    border-radius: 20mm;
+    padding: 1.5mm 5mm;
+    font-size: 7.5pt;
+    color: var(--teal-light);
+    font-weight: 600;
+  }
+  .cover-bottom {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    background: rgba(0,0,0,.25);
+    border-top: 0.3mm solid rgba(255,255,255,.1);
+    padding: 4mm var(--pad-x);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .cover-bottom-text {
+    font-size: 7pt;
+    color: rgba(255,255,255,.55);
+  }
+  .cover-bottom-url {
+    font-size: 7.5pt;
+    color: var(--teal-light);
+    font-weight: 600;
+  }
+
+  /* =========================================================
+     TABLE OF CONTENTS
+  ========================================================= */
+  .toc-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3mm 8mm;
+  }
+  .toc-item {
+    display: flex;
+    align-items: baseline;
+    gap: 2mm;
+    padding: 2mm 0;
+    border-bottom: 0.2mm dotted var(--border);
+  }
+  .toc-num {
+    font-size: 7.5pt;
+    font-weight: 700;
+    color: var(--teal);
+    min-width: 5mm;
+  }
+  .toc-label {
+    font-size: 8.5pt;
+    color: var(--text-mid);
+    flex: 1;
+  }
+  .toc-pg {
+    font-size: 7.5pt;
+    color: var(--text-light);
+    min-width: 5mm;
+    text-align: right;
+  }
+
+  /* =========================================================
+     HIGHLIGHT CARDS
+  ========================================================= */
+  .card-grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3.5mm;
+    margin-bottom: 5mm;
+  }
+  .card-grid-2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 3.5mm;
+    margin-bottom: 5mm;
+  }
+  .card {
+    background: var(--off-white);
+    border: 0.3mm solid var(--border);
+    border-radius: 2mm;
+    padding: 5mm;
+  }
+  .card-teal {
+    background: var(--teal-pale);
+    border-color: var(--teal-light);
+  }
+  .card-navy {
+    background: var(--navy);
+    border-color: var(--navy);
+    color: var(--white);
+  }
+  .card-icon {
+    font-size: 16pt;
+    margin-bottom: 3mm;
+    display: block;
+  }
+  .card-title {
+    font-size: 8.5pt;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 2mm;
+  }
+  .card-navy .card-title { color: var(--teal-light); }
+  .card-body {
+    font-size: 8pt;
+    color: var(--text-mid);
+    line-height: 1.55;
+  }
+  .card-navy .card-body { color: rgba(255,255,255,.78); }
+
+  /* =========================================================
+     PROGRAMME AT A GLANCE TABLE
+  ========================================================= */
+  .glance-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 8.5pt;
+  }
+  .glance-table tr:nth-child(odd) td { background: var(--off-white); }
+  .glance-table td {
+    padding: 3mm 4mm;
+    border-bottom: 0.2mm solid var(--border);
+    vertical-align: top;
+    line-height: 1.5;
+  }
+  .glance-table td:first-child {
+    font-weight: 700;
+    color: var(--navy);
+    width: 42mm;
+    white-space: nowrap;
+  }
+  .glance-table td:last-child { color: var(--text-mid); }
+
+  /* =========================================================
+     AUDIENCE PROFILES
+  ========================================================= */
+  .profile-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3mm;
+  }
+  .profile-card {
+    border: 0.3mm solid var(--border);
+    border-radius: 2mm;
+    overflow: hidden;
+  }
+  .profile-head {
+    background: var(--teal);
+    padding: 3mm 4mm;
+    color: var(--white);
+    font-size: 8pt;
+    font-weight: 700;
+  }
+  .profile-body {
+    padding: 3.5mm 4mm;
+    background: var(--off-white);
+    font-size: 7.5pt;
+    color: var(--text-mid);
+    line-height: 1.55;
+  }
+
+  /* =========================================================
+     LEARNING CYCLE DIAGRAM
+  ========================================================= */
+  .cycle-wrap {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    margin: 5mm 0;
+    border-radius: 2mm;
+    overflow: hidden;
+    border: 0.3mm solid var(--border);
+  }
+  .cycle-step {
+    flex: 1;
+    text-align: center;
+    padding: 4mm 3mm;
+  }
+  .cycle-step:nth-child(odd) { background: var(--navy); }
+  .cycle-step:nth-child(even) { background: var(--teal); }
+  .cycle-num {
+    display: inline-block;
+    width: 6mm; height: 6mm;
+    border-radius: 50%;
+    background: rgba(255,255,255,.2);
+    font-size: 7.5pt;
+    font-weight: 700;
+    color: var(--white);
+    line-height: 6mm;
+    margin-bottom: 2mm;
+  }
+  .cycle-label {
+    font-size: 7pt;
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.3;
+  }
+  .cycle-desc {
+    font-size: 6.5pt;
+    color: rgba(255,255,255,.72);
+    margin-top: 1.5mm;
+    line-height: 1.4;
+  }
+
+  /* =========================================================
+     TECH ECOSYSTEM
+  ========================================================= */
+  .tech-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 3mm;
+    margin-bottom: 4mm;
+  }
+  .tech-card {
+    border: 0.3mm solid var(--border);
+    border-radius: 2mm;
+    overflow: hidden;
+  }
+  .tech-head {
+    padding: 3mm 4mm;
+    font-size: 8pt;
+    font-weight: 700;
+    color: var(--white);
+  }
+  .tech-head.python  { background: #306998; }
+  .tech-head.excel   { background: #1D6F42; }
+  .tech-head.powerbi { background: #F2C811; color: var(--navy); }
+  .tech-head.colab   { background: var(--teal); }
+  .tech-head.pandas  { background: #130654; }
+  .tech-head.numpy   { background: #4DABCF; color: var(--navy); }
+  .tech-head.pquery  { background: var(--navy); }
+  .tech-head.dax     { background: #8B2FC9; }
+  .tech-body {
+    padding: 3mm 4mm;
+    font-size: 7.5pt;
+    color: var(--text-mid);
+    background: var(--off-white);
+    line-height: 1.5;
+  }
+
+  /* =========================================================
+     MODULE ROADMAP BAR
+  ========================================================= */
+  .roadmap-bar {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 2mm;
+    margin: 5mm 0;
+  }
+  .roadmap-cell {
+    border-radius: 2mm;
+    overflow: hidden;
+    text-align: center;
+  }
+  .roadmap-head {
+    background: var(--teal);
+    color: var(--white);
+    font-size: 7pt;
+    font-weight: 700;
+    padding: 2mm 1mm;
+    letter-spacing: .04em;
+  }
+  .roadmap-num {
+    background: var(--navy);
+    color: var(--white);
+    font-size: 8.5pt;
+    font-weight: 800;
+    padding: 2mm;
+  }
+  .roadmap-body {
+    background: var(--teal-pale);
+    padding: 2.5mm 2mm;
+    font-size: 7pt;
+    color: var(--navy);
+    font-weight: 600;
+    line-height: 1.35;
+    border: 0.3mm solid var(--teal-light);
+    border-top: none;
+  }
+
+  /* =========================================================
+     MODULE DETAIL PAGES
+  ========================================================= */
+  .module-banner {
+    background: var(--navy);
+    margin: 0 calc(-1 * var(--pad-x));
+    padding: 6mm var(--pad-x);
+    margin-top: calc(-1 * var(--pad-y));
+    margin-bottom: 6mm;
+    display: flex;
+    align-items: flex-start;
+    gap: 5mm;
+  }
+  .module-num-badge {
+    background: var(--teal);
+    color: var(--white);
+    font-size: 20pt;
+    font-weight: 800;
+    width: 16mm;
+    height: 16mm;
+    border-radius: 2mm;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .module-banner-text { flex: 1; }
+  .module-banner-eyebrow {
+    font-size: 7pt;
+    color: var(--teal-light);
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    margin-bottom: 1.5mm;
+  }
+  .module-banner-title {
+    font-size: 15pt;
+    font-weight: 800;
+    color: var(--white);
+    line-height: 1.2;
+    margin-bottom: 1.5mm;
+  }
+  .module-banner-subtitle {
+    font-size: 8pt;
+    color: rgba(255,255,255,.65);
+  }
+  .module-tools-row {
+    display: flex;
+    gap: 2mm;
+    margin-top: 2mm;
+  }
+  .module-tool-tag {
+    background: rgba(26,127,122,.3);
+    border: 0.3mm solid var(--teal-light);
+    border-radius: 10mm;
+    font-size: 6.5pt;
+    color: var(--teal-light);
+    padding: 0.8mm 3mm;
+    font-weight: 600;
+  }
+  .module-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4mm;
+    margin-bottom: 4mm;
+  }
+  .module-box {
+    border: 0.3mm solid var(--border);
+    border-radius: 2mm;
+    overflow: hidden;
+  }
+  .module-box-head {
+    background: var(--navy);
+    color: var(--teal-light);
+    font-size: 7pt;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    padding: 2.5mm 4mm;
+  }
+  .module-box-body {
+    padding: 3mm 4mm;
+    background: var(--white);
+  }
+  .module-box-body ul { margin: 0; }
+  .module-box-body ul li { font-size: 8pt; }
+  .module-outcome {
+    background: var(--teal-pale);
+    border-left: 1mm solid var(--teal);
+    border-radius: 0 2mm 2mm 0;
+    padding: 4mm 5mm;
+    margin-top: 4mm;
+  }
+  .module-outcome-label {
+    font-size: 7pt;
+    font-weight: 700;
+    color: var(--teal);
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    margin-bottom: 1.5mm;
+  }
+  .module-outcome p { color: var(--navy); font-size: 8.5pt; margin: 0; }
+  .module-stats {
+    display: flex;
+    gap: 3mm;
+    margin-bottom: 4mm;
+  }
+  .module-stat {
+    flex: 1;
+    background: var(--off-white);
+    border: 0.3mm solid var(--border);
+    border-radius: 2mm;
+    padding: 3mm 4mm;
+    text-align: center;
+  }
+  .module-stat-val {
+    font-size: 14pt;
+    font-weight: 800;
+    color: var(--teal);
+    line-height: 1;
+    margin-bottom: 1mm;
+  }
+  .module-stat-label {
+    font-size: 6.5pt;
+    color: var(--text-light);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+  }
+
+  /* =========================================================
+     CAPSTONE PAGE
+  ========================================================= */
+  .capstone-theme-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3mm;
+    margin: 4mm 0;
+  }
+  .capstone-theme {
+    background: var(--navy);
+    color: var(--teal-light);
+    border-radius: 2mm;
+    padding: 3mm 4mm;
+    font-size: 8pt;
+    font-weight: 700;
+    text-align: center;
+  }
+  .deliverable-row {
+    display: flex;
+    gap: 3mm;
+    margin: 3mm 0;
+    align-items: flex-start;
+  }
+  .deliverable-num {
+    background: var(--teal);
+    color: var(--white);
+    font-size: 8.5pt;
+    font-weight: 800;
+    width: 7mm;
+    height: 7mm;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 0.5mm;
+  }
+  .deliverable-text { font-size: 8.5pt; color: var(--text-mid); line-height: 1.55; }
+  .deliverable-text strong { color: var(--navy); }
+
+  /* =========================================================
+     ASSESSMENT
+  ========================================================= */
+  .assess-bar-row {
+    margin-bottom: 3.5mm;
+  }
+  .assess-bar-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 8.5pt;
+    margin-bottom: 1.5mm;
+    color: var(--text-mid);
+  }
+  .assess-bar-label strong { color: var(--navy); }
+  .assess-bar-track {
+    height: 4mm;
+    background: var(--neutral);
+    border-radius: 2mm;
+    overflow: hidden;
+  }
+  .assess-bar-fill {
+    height: 100%;
+    border-radius: 2mm;
+    background: var(--teal);
+  }
+  .assess-bar-fill.gold { background: var(--gold); }
+  .assess-bar-fill.navy { background: var(--navy); }
+
+  /* =========================================================
+     RUBRIC TABLE
+  ========================================================= */
+  .rubric-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 8pt;
+  }
+  .rubric-table th {
+    background: var(--navy);
+    color: var(--teal-light);
+    padding: 2.5mm 3mm;
+    font-size: 7.5pt;
+    text-align: left;
+    font-weight: 700;
+  }
+  .rubric-table td {
+    padding: 2.5mm 3mm;
+    border-bottom: 0.2mm solid var(--border);
+    vertical-align: top;
+    line-height: 1.45;
+    color: var(--text-mid);
+  }
+  .rubric-table tr:nth-child(even) td { background: var(--off-white); }
+  .rubric-table td:first-child { font-weight: 700; color: var(--navy); }
+  .rubric-table td:last-child { text-align: center; font-weight: 700; color: var(--teal); }
+
+  /* =========================================================
+     FAQ
+  ========================================================= */
+  .faq-item {
+    border-bottom: 0.2mm solid var(--border);
+    padding: 3mm 0;
+  }
+  .faq-q {
+    font-size: 8.5pt;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 1.5mm;
+    padding-left: 4mm;
+    position: relative;
+  }
+  .faq-q::before {
+    content: 'Q';
+    position: absolute;
+    left: 0;
+    color: var(--teal);
+    font-weight: 800;
+  }
+  .faq-a {
+    font-size: 8pt;
+    color: var(--text-mid);
+    line-height: 1.55;
+    padding-left: 4mm;
+  }
+
+  /* =========================================================
+     CALLOUT BOX
+  ========================================================= */
+  .callout {
+    background: var(--navy);
+    border-radius: 2mm;
+    padding: 5mm 6mm;
+    color: var(--white);
+    margin: 4mm 0;
+  }
+  .callout p { color: rgba(255,255,255,.78); font-size: 8.5pt; margin: 0; }
+  .callout-title {
+    font-size: 10pt;
+    font-weight: 700;
+    color: var(--teal-light);
+    margin-bottom: 2mm;
+  }
+  .callout-teal {
+    background: var(--teal);
+  }
+
+  /* =========================================================
+     CONTACT / CTA PAGE
+  ========================================================= */
+  #contact-page {
+    background: var(--navy);
+    color: var(--white);
+    min-height: var(--page-h);
+  }
+  .contact-hero {
+    background: linear-gradient(160deg, var(--teal) 0%, var(--navy-mid) 100%);
+    padding: 10mm var(--pad-x) 8mm;
+    text-align: center;
+  }
+  .contact-hero-title {
+    font-size: 20pt;
+    font-weight: 800;
+    color: var(--white);
+    margin-bottom: 3mm;
+  }
+  .contact-hero-sub {
+    font-size: 9.5pt;
+    color: rgba(255,255,255,.8);
+    max-width: 140mm;
+    margin: 0 auto 6mm;
+    line-height: 1.65;
+  }
+  .contact-body { padding: 8mm var(--pad-x); }
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5mm;
+    margin-bottom: 8mm;
+  }
+  .contact-item {
+    background: rgba(255,255,255,.06);
+    border: 0.3mm solid rgba(255,255,255,.12);
+    border-radius: 2mm;
+    padding: 5mm;
+  }
+  .contact-item-label {
+    font-size: 7pt;
+    color: var(--teal-light);
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    margin-bottom: 2mm;
+  }
+  .contact-item-val {
+    font-size: 9.5pt;
+    color: var(--white);
+    font-weight: 600;
+  }
+  .contact-item-val a {
+    color: var(--white);
+    text-decoration: none;
+  }
+  .contact-cta-box {
+    background: var(--teal);
+    border-radius: 2mm;
+    padding: 6mm 8mm;
+    text-align: center;
+  }
+  .contact-cta-box p {
+    color: rgba(255,255,255,.85);
+    font-size: 8.5pt;
+    margin-bottom: 4mm;
+  }
+  .contact-cta-title {
+    font-size: 12pt;
+    font-weight: 800;
+    color: var(--white);
+    margin-bottom: 3mm;
+  }
+  .btn-cta {
+    display: inline-block;
+    background: var(--white);
+    color: var(--teal);
+    font-size: 9pt;
+    font-weight: 700;
+    padding: 3mm 10mm;
+    border-radius: 1.5mm;
+    text-decoration: none;
+    letter-spacing: .04em;
+  }
+
+  /* =========================================================
+     OUTCOME CHIPS
+  ========================================================= */
+  .outcome-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3mm;
+    margin-bottom: 5mm;
+  }
+  .outcome-item {
+    display: flex;
+    gap: 3mm;
+    align-items: flex-start;
+    padding: 3mm 4mm;
+    background: var(--off-white);
+    border-radius: 2mm;
+    border-left: 1mm solid var(--teal);
+  }
+  .outcome-icon { font-size: 12pt; flex-shrink: 0; }
+  .outcome-text { font-size: 8.5pt; color: var(--text-mid); line-height: 1.5; }
+  .outcome-text strong { color: var(--navy); font-size: 8.5pt; display: block; margin-bottom: 0.5mm; }
+
+  /* =========================================================
+     PRINT RULES
+  ========================================================= */
+  @media print {
+    body { background: white; }
+    .page { margin: 0; box-shadow: none; }
+    .no-print { display: none !important; }
+    @page {
+      size: A4 portrait;
+      margin: 0;
+    }
+  }
+
+  /* =========================================================
+     PRINT BUTTON
+  ========================================================= */
+  .print-btn {
+    position: fixed;
+    bottom: 8mm;
+    right: 8mm;
+    background: var(--teal);
+    color: var(--white);
+    border: none;
+    padding: 3mm 7mm;
+    border-radius: 2mm;
+    font-size: 9pt;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 2mm 6mm rgba(0,0,0,.25);
+    z-index: 9999;
+  }
+  .print-btn:hover { background: var(--teal-light); }
+  @media print { .print-btn { display: none; } }
+
+  /* =========================================================
+     IMAGE PLACEHOLDER
+  ========================================================= */
+  .img-placeholder {
+    background: linear-gradient(135deg, var(--neutral), var(--teal-pale));
+    border: 0.4mm dashed var(--teal-light);
+    border-radius: 2mm;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 6mm;
+    color: var(--teal);
+  }
+  .img-placeholder-icon { font-size: 20pt; margin-bottom: 2mm; }
+  .img-placeholder-label { font-size: 7.5pt; font-weight: 700; color: var(--navy); margin-bottom: 1mm; }
+  .img-placeholder-brief { font-size: 6.5pt; color: var(--text-light); line-height: 1.4; max-width: 60mm; }
+
+  /* wide sidebar layout */
+  .sidebar-layout {
+    display: grid;
+    grid-template-columns: 1fr 52mm;
+    gap: 6mm;
+  }
+  .sidebar-box {
+    background: var(--navy);
+    border-radius: 2mm;
+    padding: 5mm;
+  }
+  .sidebar-box-title {
+    font-size: 8pt;
+    font-weight: 700;
+    color: var(--teal-light);
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    margin-bottom: 3mm;
+    border-bottom: 0.3mm solid rgba(255,255,255,.12);
+    padding-bottom: 2mm;
+  }
+  .sidebar-box ul li { color: rgba(255,255,255,.75); font-size: 8pt; }
+  .sidebar-box ul li::before { color: var(--teal-light); }
+</style>
+</head>
+<body>
+
+<button class="print-btn no-print" onclick="window.print()">🖨 Save as PDF</button>
+
+<!-- ============================================================
+     PAGE 1 — COVER
+============================================================ -->
+<div class="page" id="cover">
+  <div class="cover-top-stripe"></div>
+  <div class="cover-body">
+    <!-- Logo -->
+    <div class="cover-logo-area">
+      <svg width="130" height="42" viewBox="0 0 260 84" xmlns="http://www.w3.org/2000/svg" aria-label="SI Analytics logo">
+        <!-- Data dots -->
+        <circle cx="12" cy="52" r="5" fill="#1A7F7A" opacity=".9"/>
+        <circle cx="22" cy="44" r="4.5" fill="#1A7F7A" opacity=".8"/>
+        <circle cx="30" cy="58" r="3.5" fill="#1A7F7A" opacity=".7"/>
+        <circle cx="18" cy="64" r="3" fill="#1A7F7A" opacity=".6"/>
+        <circle cx="8" cy="66" r="2.5" fill="#1A7F7A" opacity=".5"/>
+        <circle cx="28" cy="68" r="2" fill="#1A7F7A" opacity=".4"/>
+        <circle cx="36" cy="50" r="3" fill="#1A7F7A" opacity=".6"/>
+        <circle cx="6" cy="58" r="2" fill="#1A7F7A" opacity=".4"/>
+        <!-- Arc -->
+        <path d="M 38 20 Q 120 -10 200 18" stroke="#0D1B3E" stroke-width="9" fill="none" stroke-linecap="round"/>
+        <!-- SI Analytics text -->
+        <text x="42" y="46" font-family="Segoe UI,Arial,sans-serif" font-size="24" font-weight="800" fill="#1A7F7A">SI Analytics</text>
+        <text x="42" y="60" font-family="Segoe UI,Arial,sans-serif" font-size="9" fill="rgba(255,255,255,.6)" font-style="italic">Empowering decisions, driving innovation</text>
+      </svg>
+      <div style="margin-left:auto;"><span class="cover-badge">Curriculum Brochure</span></div>
+    </div>
+
+    <!-- Hero Image -->
+    <div class="cover-hero-img" role="img" aria-label="Diverse adult learners participating in a live virtual data analytics workshop, reviewing dashboards on laptop screens in a professional setting">
+      <div class="cover-hero-caption">A cohort-based learning experience for professionals at every career stage</div>
+    </div>
+
+    <!-- Programme Title -->
+    <div class="cover-title">Accelerated Data <span>Analytics</span> Bootcamp</div>
+    <div class="cover-descriptor">Six Weeks. Zero to Analytics. Real Skills. Real Impact.</div>
+    <div class="cover-statement">
+      A structured, hands-on programme that builds practical expertise in Python, Microsoft Excel, and Microsoft Power BI — equipping professionals with the analytical capabilities required to work confidently with data in real organisations.
+    </div>
+    <div class="cover-pills">
+      <span class="cover-pill">🐍 Python &amp; Pandas</span>
+      <span class="cover-pill">📊 Microsoft Excel</span>
+      <span class="cover-pill">📈 Power BI</span>
+      <span class="cover-pill">☁ Google Colab</span>
+      <span class="cover-pill">🎓 Certificate of Completion</span>
+    </div>
+  </div>
+
+  <div class="cover-bottom">
+    <div class="cover-bottom-text">Delivered by SI Analytics — Strategic Insights and Analytics</div>
+    <div class="cover-bottom-url">www.sianalytics.org</div>
+  </div>
+</div>
+
+
+<!-- ============================================================
+     PAGE 2 — TABLE OF CONTENTS
+============================================================ -->
+<div class="page">
+  <div class="page-header">
+    <span class="hdr-brand">SI Analytics</span>
+    <span class="hdr-title">Accelerated Data Analytics Bootcamp</span>
+  </div>
+  <div class="content">
+    <div class="section-eyebrow">Navigation</div>
+    <div class="section-title">Table of Contents</div>
+    <div class="divider-teal"></div>
+
+    <div class="toc-grid">
+      <div class="toc-item"><span class="toc-num">01</span><span class="toc-label">Executive Programme Overview</span><span class="toc-pg">3</span></div>
+      <div class="toc-item"><span class="toc-num">02</span><span class="toc-label">Programme at a Glance</span><span class="toc-pg">3</span></div>
+      <div class="toc-item"><span class="toc-num">03</span><span class="toc-label">Why This Bootcamp Matters</span><span class="toc-pg">4</span></div>
+      <div class="toc-item"><span class="toc-num">04</span><span class="toc-label">Intended Audience</span><span class="toc-pg">4</span></div>
+      <div class="toc-item"><span class="toc-num">05</span><span class="toc-label">Entry Requirements</span><span class="toc-pg">5</span></div>
+      <div class="toc-item"><span class="toc-num">06</span><span class="toc-label">Programme Learning Outcomes</span><span class="toc-pg">5</span></div>
+      <div class="toc-item"><span class="toc-num">07</span><span class="toc-label">Learning Model</span><span class="toc-pg">6</span></div>
+      <div class="toc-item"><span class="toc-num">08</span><span class="toc-label">Technology Ecosystem</span><span class="toc-pg">6</span></div>
+      <div class="toc-item"><span class="toc-num">09</span><span class="toc-label">Six-Module Curriculum Roadmap</span><span class="toc-pg">7</span></div>
+      <div class="toc-item"><span class="toc-num">10</span><span class="toc-label">Module 1 — Analytics Foundations &amp; Python</span><span class="toc-pg">8</span></div>
+      <div class="toc-item"><span class="toc-num">11</span><span class="toc-label">Module 2 — Data Wrangling &amp; Cleaning</span><span class="toc-pg">9</span></div>
+      <div class="toc-item"><span class="toc-num">12</span><span class="toc-label">Module 3 — Data Analysis with Python</span><span class="toc-pg">10</span></div>
+      <div class="toc-item"><span class="toc-num">13</span><span class="toc-label">Module 4 — Intermediate Excel</span><span class="toc-pg">11</span></div>
+      <div class="toc-item"><span class="toc-num">14</span><span class="toc-label">Module 5 — Power BI Modelling &amp; Dashboards</span><span class="toc-pg">12</span></div>
+      <div class="toc-item"><span class="toc-num">15</span><span class="toc-label">Module 6 — Capstone Project</span><span class="toc-pg">13</span></div>
+      <div class="toc-item"><span class="toc-num">16</span><span class="toc-label">Assessment Framework &amp; Grading</span><span class="toc-pg">14</span></div>
+      <div class="toc-item"><span class="toc-num">17</span><span class="toc-label">Capstone Grading Rubric</span><span class="toc-pg">14</span></div>
+      <div class="toc-item"><span class="toc-num">18</span><span class="toc-label">Learner Support &amp; Community</span><span class="toc-pg">15</span></div>
+      <div class="toc-item"><span class="toc-num">19</span><span class="toc-label">What You Will Leave With</span><span class="toc-pg">15</span></div>
+      <div class="toc-item"><span class="toc-num">20</span><span class="toc-label">Why SI Analytics</span><span class="toc-pg">16</span></div>
+      <div class="toc-item"><span class="toc-num">21</span><span class="toc-label">Frequently Asked Questions</span><span class="toc-pg">17</span></div>
+      <div class="toc-item"><span class="toc-num">22</span><span class="toc-label">Contact &amp; Enrolment</span><span class="toc-pg">18</span></div>
+    </div>
+
+    <div style="margin-top:8mm;">
+      <div class="callout">
+        <div class="callout-title">About This Brochure</div>
+        <p>This document provides a complete curriculum overview for prospective learners, organisational sponsors, workforce development bodies, and training partners. All programme specifications reflect the proposed curriculum design and are subject to final approval by SI Analytics prior to cohort delivery. Grading percentages, attendance requirements, and assessment policies should be confirmed with SI Analytics before enrolment.</p>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer">
+    <span class="ftr-left">Accelerated Data Analytics Bootcamp</span>
+    <span class="ftr-right">www.sianalytics.org</span>
+    <span class="page-num">2</span>
+  </div>
+</div>
+
+
+<!-- ============================================================
+     PAGE 3 — OVERVIEW + AT A GLANCE
+============================================================ -->
+<div class="page">
+  <div class="page-header">
+    <span class="hdr-brand">SI Analytics</span>
+    <span class="hdr-title">Programme Overview</span>
+  </div>
+  <div class="content">
+    <div class="section-eyebrow">Executive Programme Overview</div>
+    <div class="section-title">What Is the Accelerated Data Analytics Bootcamp?</div>
+    <div class="divider-teal"></div>
+
+    <p class="lead">The Accelerated Data Analytics Bootcamp is a structured, six-module cohort programme that equips working professionals with practical, deployable skills across three of the most widely used analytical tools in modern organisations: Python, Microsoft Excel, and Microsoft Power BI.</p>
+
+    <div class="sidebar-layout">
+      <div>
+        <p>The programme is designed to address a persistent gap between the growing demand for data literacy in organisations and the availability of professionals who can confidently prepare, analyse, and communicate data. Many professionals work with data daily but lack a structured foundation in the tools and methods that would make their work more accurate, efficient, and impactful.</p>
+        <p>This bootcamp provides that foundation — not through isolated tool training, but through a deliberately integrated curriculum that mirrors how data actually moves through a real analytical workflow: from raw, messy datasets to clean, structured data, through rigorous analysis, and ultimately into clear, decision-ready dashboards and reports.</p>
+        <p>Python handles the heavy lifting of data preparation and analysis. Excel provides a familiar and powerful environment for structured reporting and business calculations. Power BI translates the work into interactive dashboards that communicate findings to stakeholders at every level of an organisation. Together, these three tools form a coherent, complementary analytical ecosystem.</p>
+        <p>The bootcamp is delivered using a flipped-classroom model, combining pre-recorded instruction, professionally prepared learning materials, live instructor-led workshops, and applied assignments. Learners progress as a cohort, supported by mentors and a peer learning community, and complete the programme with a portfolio-worthy capstone project.</p>
+      </div>
+      <div>
+        <div class="sidebar-box">
+          <div class="sidebar-box-title">Programme at a Glance</div>
+          <table class="glance-table" style="font-size:7.5pt;">
+            <tr><td style="color:var(--teal-light);font-weight:700;">Duration</td><td style="color:rgba(255,255,255,.75);">Six modules over six weeks</td></tr>
+            <tr><td style="color:var(--teal-light);font-weight:700;">Format</td><td style="color:rgba(255,255,255,.75);">Flipped classroom — live + guided self-paced</td></tr>
+            <tr><td style="color:var(--teal-light);font-weight:700;">Tools</td><td style="color:rgba(255,255,255,.75);">Python (Colab), Excel, Power BI</td></tr>
+            <tr><td style="color:var(--teal-light);font-weight:700;">Modules</td><td style="color:rgba(255,255,255,.75);">6 structured modules</td></tr>
+            <tr><td style="color:var(--teal-light);font-weight:700;">Assessment</td><td style="color:rgba(255,255,255,.75);">Ongoing + Capstone Project</td></tr>
+            <tr><td style="color:var(--teal-light);font-weight:700;">Weekly hours</td><td style="color:rgba(255,255,255,.75);">8–12 hours (indicative)</td></tr>
+            <tr><td style="color:var(--teal-light);font-weight:700;">Prerequisite</td><td style="color:rgba(255,255,255,.75);">None — beginner friendly</td></tr>
+            <tr><td style="color:var(--teal-light);font-weight:700;">Award</td><td style="color:rgba(255,255,255,.75);">SI Analytics Certificate</td></tr>
+          </table>
+        </div>
+
+        <div style="margin-top:3mm;" class="card card-teal">
+          <div class="card-title">🎯 Programme Purpose</div>
+          <div class="card-body">To build practical, transferable data analytics competencies that learners can apply immediately in their professional roles — regardless of sector, job title, or prior experience.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer">
+    <span class="ftr-left">Accelerated Data Analytics Bootcamp</span>
+    <span class="ftr-right">www.sianalytics.org</span>
+    <span class="page-num">3</span>
+  </div>
+</div>
+
+
+<!-- ============================================================
+     PAGE 4 — WHY IT MATTERS + AUDIENCE
+============================================================ -->
+<div class="page">
+  <div class="page-header">
+    <span class="hdr-brand">SI Analytics</span>
+    <span class="hdr-title">Programme Relevance &amp; Audience</span>
+  </div>
+  <div class="content">
+    <div class="section-eyebrow">Why This Bootcamp Matters</div>
+    <div class="section-title-sm">The Case for Practical Analytics Education</div>
+    <div class="divider-teal"></div>
+
+    <p>Organisations across every sector — health, finance, development, government, and business — generate more data than ever before. Yet the ability to work confidently with that data remains unevenly distributed. Reports are produced without rigorous cleaning. Decisions are made on spreadsheets built without consistent logic. Dashboards are built without a clear analytical model beneath them. The gap is not one of intelligence or motivation — it is one of structured, practical training.</p>
+
+    <div class="card-grid-3" style="margin-top:4mm;">
+      <div class="card card-teal">
+        <span class="card-icon">🔬</span>
+        <div class="card-title">Data Literacy</div>
+        <div class="card-body">The ability to read, question, and work with data is no longer specialist knowledge. It is a core professional competency that strengthens judgement across every function.</div>
+      </div>
+      <div class="card card-teal">
+        <span class="card-icon">🧹</span>
+        <div class="card-title">Clean, Reliable Data</div>
+        <div class="card-body">Most analytical errors originate in the data preparation stage. This bootcamp places structured cleaning and quality assessment at the centre of its curriculum.</div>
+      </div>
+      <div class="card card-teal">
+        <span class="card-icon">📢</span>
+        <div class="card-title">Data Storytelling</div>
+        <div class="card-body">Analysis that cannot be communicated clearly has limited organisational value. Power BI and dashboard design are taught as tools for decision-relevant communication, not decoration.</div>
+      </div>
+    </div>
+
+    <div class="card-grid-3">
+      <div class="card card-teal">
+        <span class="card-icon">🔄</span>
+        <div class="card-title">Reproducible Workflows</div>
+        <div class="card-body">Python and structured Excel practices introduce learners to analytical workflows that can be repeated, audited, and shared — reducing errors and improving institutional reliability.</div>
+      </div>
+      <div class="card card-teal">
+        <span class="card-icon">📐</span>
+        <div class="card-title">Analytical Thinking</div>
+        <div class="card-body">The programme develops the habit of translating real questions into structured analyses — a transferable skill that improves performance well beyond the six weeks.</div>
+      </div>
+      <div class="card card-teal">
+        <span class="card-icon">🏢</span>
+        <div class="card-title">Business Intelligence</div>
+        <div class="card-body">Power BI provides the tools to build the kind of interactive, executive-ready dashboards that inform resource allocation, performance monitoring, and strategic planning.</div>
+      </div>
+    </div>
+
+    <hr class="divider"/>
+
+    <div class="section-eyebrow" style="margin-top:2mm;">Intended Audience</div>
+    <div class="section-title-sm">Who Is This Programme Designed For?</div>
+    <div class="divider-teal"></div>
+    <p style="margin-bottom:4mm;">The bootcamp is built for professionals and learners who work with data — or want to — and need a structured, practical pathway to doing it well. No prior coding or analytics experience is required.</p>
+
+    <div class="profile-grid">
+      <div class="profile-card">
+        <div class="profile-head">📋 Public Health &amp; M&amp;E</div>
+        <div class="profile-body">Programme officers, epidemiologists, monitoring and evaluation specialists, and health researchers who need to analyse and present programme data to stakeholders and funders.</div>
+      </div>
+      <div class="profile-card">
+        <div class="profile-head">💰 Finance &amp; Accounting</div>
+        <div class="profile-body">Accountants, finance analysts, and budget officers seeking to move beyond basic spreadsheets into structured data analysis, reporting, and business intelligence.</div>
+      </div>
+      <div class="profile-card">
+        <div class="profile-head">📊 Business &amp; Operations</div>
+        <div class="profile-body">Business analysts, operations managers, and programme managers who need to track performance, identify trends, and communicate findings across their organisations.</div>
+      </div>
+      <div class="profile-card">
+        <div class="profile-head">🌍 Development Sector</div>
+        <div class="profile-body">Development professionals, NGO staff, and policy analysts working with project data, beneficiary records, or sector-level datasets who need stronger analytical tools.</div>
+      </div>
+      <div class="profile-card">
+        <div class="profile-head">🎓 Researchers &amp; Academics</div>
+        <div class="profile-body">Graduate students and early-career researchers in applied fields who need to prepare, analyse, and visualise data for dissertations, publications, or programme evaluations.</div>
+      </div>
+      <div class="profile-card">
+        <div class="profile-head">🔄 Career Switchers</div>
+        <div class="profile-body">Professionals transitioning into data-related roles who want a rigorous, structured introduction to the tools used by working analysts — without a multi-year commitment.</div>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer">
+    <span class="ftr-left">Accelerated Data Analytics Bootcamp</span>
+    <span class="ftr-right">www.sianalytics.org</span>
+    <span class="page-num">4</span>
+  </div>
+</div>
+
+
+<!-- ============================================================
+     PAGE 5 — ENTRY REQUIREMENTS + LEARNING OUTCOMES
+============================================================ -->
+<div class="page">
+  <div class="page-header">
+    <span class="hdr-brand">SI Analytics</span>
+    <span class="hdr-title">Requirements &amp; Outcomes</span>
+  </div>
+  <div class="content">
+    <div class="section-eyebrow">Entry Requirements</div>
+    <div class="section-title-sm">What You Need to Begin</div>
+    <div class="divider-teal"></div>
+
+    <div class="card-grid-2" style="margin-bottom:5mm;">
+      <div class="card">
+        <div class="card-title">✅ No Coding Experience Needed</div>
+        <div class="card-body">The bootcamp begins from first principles. Learners with no programming background are welcome and will be fully supported from their first line of Python through to their final Power BI dashboard.</div>
+      </div>
+      <div class="card">
+        <div class="card-title">💻 Computer &amp; Internet Access</div>
+        <div class="card-body">Learners require access to a reliable computer and a stable internet connection. Python instruction uses Google Colab, which runs entirely in a browser and requires no local installation.</div>
+      </div>
+      <div class="card">
+        <div class="card-title">📋 Basic Computer Literacy</div>
+        <div class="card-body">Comfort with using a web browser, creating and organising files, and navigating common applications is expected. No advanced technical background is required beyond this.</div>
+      </div>
+      <div class="card">
+        <div class="card-title">🖥 Power BI Desktop</div>
+        <div class="card-body">Power BI Desktop is available as a free download and is optimised for Microsoft Windows. Learners using Windows machines will have access to the full Power BI Desktop experience. Learners on macOS should note this requirement and are encouraged to contact SI Analytics for guidance prior to enrolment.</div>
+      </div>
+    </div>
+
+    <div class="callout" style="margin-bottom:5mm;">
+      <div class="callout-title">Software Requirements Summary</div>
+      <p><strong style="color:var(--teal-light);">Python:</strong> Google Colab (browser-based, free — requires a Google account) &nbsp;|&nbsp; <strong style="color:var(--teal-light);">Excel:</strong> Microsoft Excel (Microsoft 365 or a compatible version recommended) &nbsp;|&nbsp; <strong style="color:var(--teal-light);">Power BI:</strong> Power BI Desktop (free download from Microsoft, Windows-optimised). Please confirm your software access with SI Analytics before the programme begins.</p>
+    </div>
+
+    <hr class="divider"/>
+
+    <div class="section-eyebrow">Learning Outcomes</div>
+    <div class="section-title-sm">What Learners Will Be Able to Do</div>
+    <div class="divider-teal"></div>
+    <p style="margin-bottom:4mm;">By the end of the bootcamp, successful participants will have demonstrated the ability to:</p>
+
+    <div class="outcome-grid">
+      <div class="outcome-item">
+        <div class="outcome-icon">🐍</div>
+        <div class="outcome-text"><strong>Write Python for Data Work</strong>Use Python and Pandas in Google Colab to import, inspect, clean, and transform real-world datasets in reproducible analytical workflows.</div>
+      </div>
+      <div class="outcome-item">
+        <div class="outcome-icon">📊</div>
+        <div class="outcome-text"><strong>Perform Intermediate Excel Analysis</strong>Apply advanced Excel functions, PivotTables, lookup formulas, and structured reporting techniques to business and programme datasets.</div>
+      </div>
+      <div class="outcome-item">
+        <div class="outcome-icon">🔗</div>
+        <div class="outcome-text"><strong>Build Reliable Power BI Data Models</strong>Import and transform data using Power Query, define table relationships, build calculated measures with DAX, and create a robust analytical model.</div>
+      </div>
+      <div class="outcome-item">
+        <div class="outcome-icon">📈</div>
+        <div class="outcome-text"><strong>Design Interactive Dashboards</strong>Create clear, well-structured Power BI dashboards using appropriate chart types, KPIs, slicers, and a considered visual hierarchy that guides interpretation.</div>
+      </div>
+      <div class="outcome-item">
+        <div class="outcome-icon">🔍</div>
+        <div class="outcome-text"><strong>Translate Data into Insight</strong>Move beyond descriptive output to construct analytical arguments — identifying patterns, comparing groups, and drawing evidence-informed conclusions.</div>
+      </div>
+      <div class="outcome-item">
+        <div class="outcome-icon">🎤</div>
+        <div class="outcome-text"><strong>Present Findings Effectively</strong>Communicate analytical results clearly to both technical and non-technical audiences through structured narratives, dashboards, and executive summaries.</div>
+      </div>
+      <div class="outcome-item">
+        <div class="outcome-icon">🗂</div>
+        <div class="outcome-text"><strong>Complete an End-to-End Project</strong>Execute a full analytical project — from problem definition and data preparation through analysis, modelling, and dashboard delivery — as a portfolio-ready artefact.</div>
+      </div>
+      <div class="outcome-item">
+        <div class="outcome-icon">⚙</div>
+        <div class="outcome-text"><strong>Apply Professional Data Practices</strong>Demonstrate sound data quality habits, structured workflow organisation, and the judgement to choose appropriate tools and methods for a given analytical task.</div>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer">
+    <span class="ftr-left">Accelerated Data Analytics Bootcamp</span>
+    <span class="ftr-right">www.sianalytics.org</span>
+    <span class="page-num">5</span>
+  </div>
+</div>
+
+
+<!-- ============================================================
+     PAGE 6 — LEARNING MODEL + TECHNOLOGY ECOSYSTEM
+============================================================ -->
+<div class="page">
+  <div class="page-header">
+    <span class="hdr-brand">SI Analytics</span>
+    <span class="hdr-title">Learning Model &amp; Technology</span>
+  </div>
+  <div class="content">
+    <div class="section-eyebrow">Learning Model</div>
+    <div class="section-title-sm">How the Bootcamp Works — The Flipped Classroom</div>
+    <div class="divider-teal"></div>
+
+    <p style="margin-bottom:4mm;">The Accelerated Data Analytics Bootcamp uses a flipped-classroom model in which learners engage with instructional content before the live session — freeing workshop time for guided practice, problem solving, and applied work. This approach places active learning at the centre of the experience, with instructor time used where it adds the most value: working through real problems alongside learners rather than delivering passive lectures.</p>
+
+    <div class="cycle-wrap">
+      <div class="cycle-step">
+        <div class="cycle-num">1</div>
+        <div class="cycle-label">Pre-Work</div>
+        <div class="cycle-desc">Pre-recorded videos, lesson notes &amp; guided exercises<br/><em style="color:rgba(255,255,255,.5);font-size:6pt;">2–3 hrs</em></div>
+      </div>
+      <div class="cycle-step">
+        <div class="cycle-num">2</div>
+        <div class="cycle-label">Live Workshop</div>
+        <div class="cycle-desc">Instructor-led session with demonstrations &amp; hands-on practice<br/><em style="color:rgba(255,255,255,.5);font-size:6pt;">2 hrs</em></div>
+      </div>
+      <div class="cycle-step">
+        <div class="cycle-num">3</div>
+        <div class="cycle-label">Applied Assignment</div>
+        <div class="cycle-desc">Practical task submitted for structured feedback<br/><em style="color:rgba(255,255,255,.5);font-size:6pt;">3–4 hrs</em></div>
+      </div>
+      <div class="cycle-step">
+        <div class="cycle-num">4</div>
+        <div class="cycle-label">Help Session</div>
+        <div class="cycle-desc">Optional Q&amp;A, troubleshooting &amp; peer discussion<br/><em style="color:rgba(255,255,255,.5);font-size:6pt;">Optional</em></div>
+      </div>
+      <div class="cycle-step">
+        <div class="cycle-num">5</div>
+        <div class="cycle-label">Feedback &amp; Review</div>
+        <div class="cycle-desc">Instructor comments, self-assessment &amp; consolidation<br/><em style="color:rgba(255,255,255,.5);font-size:6pt;">Ongoing</em></div>
+      </div>
+      <div class="cycle-step">
+        <div class="cycle-num">6</div>
+        <div class="cycle-label">Capstone Build</div>
+        <div class="cycle-desc">Cumulative project developed across the programme<br/><em style="color:rgba(255,255,255,.5);font-size:6pt;">Module 6</em></div>
+      </div>
+    </div>
+
+    <div class="card" style="margin:4mm 0; background:var(--teal-pale); border-color:var(--teal-light);">
+      <div style="font-size:8.5pt; color:var(--text-mid); line-height:1.6;"><strong style="color:var(--navy);">Indicative weekly commitment:</strong> 8–12 hours, comprising pre-work (2–3 hrs), the live workshop (2 hrs), the applied assignment (3–4 hrs), and optional support sessions. Learners who invest more time consistently report stronger outcomes.</div>
+    </div>
+
+    <hr class="divider"/>
+
+    <div class="section-eyebrow">Technology Ecosystem</div>
+    <div class="section-title-sm">Three Tools, One Integrated Workflow</div>
+    <div class="divider-teal"></div>
+    <p style="margin-bottom:4mm;">Each tool in the bootcamp plays a distinct and complementary role. They are not interchangeable — they are sequential stages in the journey from raw data to strategic insight.</p>
+
+    <div class="tech-grid">
+      <div class="tech-card"><div class="tech-head colab">Google Colab</div><div class="tech-body">Browser-based Python environment requiring no local setup. Provides a consistent, accessible coding space for all learners regardless of operating system.</div></div>
+      <div class="tech-card"><div class="tech-head python">Python</div><div class="tech-body">The analytical engine of the programme. Used for importing, inspecting, cleaning, transforming, grouping, and preparing data for downstream analysis and reporting.</div></div>
+      <div class="tech-card"><div class="tech-head pandas">Pandas</div><div class="tech-body">Python's primary data manipulation library. Provides Series and DataFrame structures for structured data work, used throughout Modules 1 to 3.</div></div>
+      <div class="tech-card"><div class="tech-head numpy">NumPy</div><div class="tech-body">Foundational numerical computing library. Supports array operations and underpins Pandas — introduced in Module 2 where relevant to data preparation work.</div></div>
+    </div>
+    <div class="tech-grid">
+      <div class="tech-card"><div class="tech-head excel">Microsoft Excel</div><div class="tech-body">An indispensable professional tool. Module 4 builds intermediate competency in functions, PivotTables, and structured reporting — skills used alongside and independent of Python.</div></div>
+      <div class="tech-card"><div class="tech-head powerbi">Power BI Desktop</div><div class="tech-body">The primary visualisation and business intelligence platform. Used in Module 5 to build data models, write measures, and develop interactive executive dashboards.</div></div>
+      <div class="tech-card"><div class="tech-head pquery">Power Query</div><div class="tech-body">Power BI's built-in data transformation layer. Learners use Power Query to import, clean, and reshape data — extending their Python data preparation skills into the BI environment.</div></div>
+      <div class="tech-card"><div class="tech-head dax">DAX</div><div class="tech-body">Data Analysis Expressions — Power BI's formula language. Learners write practical DAX measures for calculated KPIs, conditional aggregations, and comparative metrics.</div></div>
+    </div>
+  </div>
+  <div class="page-footer">
+    <span class="ftr-left">Accelerated Data Analytics Bootcamp</span>
+    <span class="ftr-right">www.sianalytics.org</span>
+    <span class="page-num">6</span>
+  </div>
+</div>
+
+
+<!-- ============================================================
+     PAGE 7 — SIX-MODULE ROADMAP
+============================================================ -->
+<div class="page">
+  <div class="page-header">
+    <span class="hdr-brand">SI Analytics</span>
+    <span class="hdr-title">Curriculum Roadmap</span>
+  </div>
+  <div class="content">
+    <div class="section-eyebrow">Curriculum Overview</div>
+    <div class="section-title">Six-Module Curriculum Roadmap</div>
+    <div class="divider-teal"></div>
+    <p style="margin-bottom:5mm;">The programme is structured as six sequential modules, each building directly on the skills established in the previous. The learning arc moves from Python fundamentals through data wrangling and analysis, into Excel-based reporting, Power BI dashboard development, and culminates in a fully integrated capstone project.</p>
+
+    <div class="roadmap-bar">
+      <div class="roadmap-cell">
+        <div class="roadmap-num">M1</div>
+        <div class="roadmap-head">Analytics Foundations &amp; Python</div>
+        <div class="roadmap-body">Python syntax, Colab, data types, logic, loops, functions</div>
+      </div>
+      <div class="roadmap-cell">
+        <div class="roadmap-num">M2</div>
+        <div class="roadmap-head">Data Wrangling &amp; Cleaning</div>
+        <div class="roadmap-body">Pandas, import/export, missing data, cleaning, transformation</div>
+      </div>
+      <div class="roadmap-cell">
+        <div class="roadmap-num">M3</div>
+        <div class="roadmap-head">Data Analysis with Python</div>
+        <div class="roadmap-body">Grouping, aggregation, merging, descriptive stats, EDA</div>
+      </div>
+      <div class="roadmap-cell">
+        <div class="roadmap-num">M4</div>
+        <div class="roadmap-head">Intermediate Excel</div>
+        <div class="roadmap-body">Functions, PivotTables, lookups, conditional logic, reporting</div>
+      </div>
+      <div class="roadmap-cell">
+        <div class="roadmap-num">M5</div>
+        <div class="roadmap-head">Power BI Modelling &amp; Dashboards</div>
+        <div class="roadmap-body">Power Query, data model, DAX, KPIs, dashboard design</div>
+      </div>
+      <div class="roadmap-cell">
+        <div class="roadmap-num">M6</div>
+        <div class="roadmap-head">Integrated Capstone Project</div>
+        <div class="roadmap-body">End-to-end project, dashboard, executive summary, presentation</div>
+      </div>
+    </div>
+
+    <!-- Progression arrow -->
+    <div style="display:flex; align-items:center; margin:3mm 0 6mm; gap:2mm;">
+      <div style="height:1mm; flex:1; background:linear-gradient(to right, var(--teal), var(--navy));"></div>
+      <div style="font-size:7.5pt; color:var(--text-light); white-space:nowrap;">← Increasing independence and integration →</div>
+      <div style="height:1mm; flex:1; background:linear-gradient(to right, var(--navy), var(--teal));"></div>
+    </div>
+
+    <!-- Summary table -->
+    <table class="glance-table">
+      <thead>
+        <tr style="background:var(--navy);">
+          <td style="color:var(--teal-light); font-weight:700; font-size:8pt; width:12mm;">Module</td>
+          <td style="color:var(--teal-light); font-weight:700; font-size:8pt;">Theme</td>
+          <td style="color:var(--teal-light); font-weight:700; font-size:8pt;">Primary Tool(s)</td>
+          <td style="color:var(--teal-light); font-weight:700; font-size:8pt;">Key Deliverable</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td style="font-weight:700; color:var(--teal);">M1</td><td>Analytics Foundations &amp; Introduction to Python</td><td>Python, Google Colab</td><td>Introductory Colab notebook with coded exercises</td></tr>
+        <tr><td style="font-weight:700; color:var(--teal);">M2</td><td>Data Wrangling &amp; Cleaning with Python</td><td>Python, Pandas, NumPy</td><td>Clean, export-ready dataset with documented workflow</td></tr>
+        <tr><td style="font-weight:700; color:var(--teal);">M3</td><td>Data Analysis with Python</td><td>Python, Pandas</td><td>Analytical notebook with grouped statistics and insights</td></tr>
+        <tr><td style="font-weight:700; color:var(--teal);">M4</td><td>Intermediate Microsoft Excel for Analysts</td><td>Microsoft Excel</td><td>Structured analytical workbook with PivotTable report</td></tr>
+        <tr><td style="font-weight:700; color:var(--teal);">M5</td><td>Power BI Data Modelling &amp; Dashboard Development</td><td>Power BI, Power Query, DAX</td><td>Interactive Power BI dashboard with data model and KPIs</td></tr>
+        <tr><td style="font-weight:700; color:var(--teal);">M6</td><td>Integrated Capstone Project &amp; Presentation</td><td>All tools</td><td>End-to-end project with dashboard, summary, and presentation</td></tr>
+      </tbody>
+    </table>
+
+    <div style="margin-top:5mm;" class="card-grid-3">
+      <div class="card card-navy">
+        <div class="card-icon">📅</div>
+        <div class="card-title">One Module Per Week</div>
+        <div class="card-body">Each module corresponds to one week of the programme, with structured pre-work, a live workshop, and an applied assignment ensuring consistent momentum.</div>
+      </div>
+      <div class="card card-navy">
+        <div class="card-icon">🔗</div>
+        <div class="card-title">Integrated by Design</div>
+        <div class="card-body">Python-prepared data flows directly into Power BI. Excel skills reinforce and complement both. The tools are not taught in isolation — they are taught as a connected system.</div>
+      </div>
+      <div class="card card-navy">
+        <div class="card-icon">📁</div>
+        <div class="card-title">Portfolio-Building</div>
+        <div class="card-body">Every module assignment contributes to a growing body of work. By Module 6, learners have a portfolio of practical, real-world analytical outputs they can share with employers.</div>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer">
+    <span class="ftr-left">Accelerated Data Analytics Bootcamp</span>
+    <span class="ftr-right">www.sianalytics.org</span>
+    <span class="page-num">7</span>
+  </div>
+</div>
+
+
+<!-- ============================================================
+     PAGE 8 — MODULE 1
+============================================================ -->
+<div class="page">
+  <div class="page-header">
+    <span class="hdr-brand">SI Analytics</span>
+    <span class="hdr-title">Module 1</span>
+  </div>
+  <div class="content">
+    <div class="module-banner">
+      <div class="module-num-badge">M1</div>
+      <div class="module-banner-text">
+        <div class="module-banner-eyebrow">Module One · Week One</div>
+        <div class="module-banner-title">Analytics Foundations &amp; Introduction to Python</div>
+        <div class="module-banner-subtitle">Build your analytical foundation and write your first Python code in Google Colab</div>
+        <div class="module-tools-row">
+          <span class="module-tool-tag">Google Colab</span>
+          <span class="module-tool-tag">Python</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="module-stats">
+      <div class="module-stat"><div class="module-stat-val">~10h</div><div class="module-stat-label">Estimated Effort</div></div>
+      <div class="module-stat"><div class="module-stat-val">2h</div><div class="module-stat-label">Live Workshop</div></div>
+      <div class="module-stat"><div class="module-stat-val">2–3h</div><div class="module-stat-label">Pre-Work</div></div>
+      <div class="module-stat"><div class="module-stat-val">1</div><div class="module-stat-label">Assignment</div></div>
+    </div>
+
+    <p style="margin-bottom:4mm;"><strong>Strategic purpose:</strong> Module 1 establishes the mindset and foundational skills that every subsequent module builds upon. Learners are introduced to the analytics workflow, the Google Colab environment, and the Python syntax they will use throughout the programme. By the end of this module, learners should feel comfortable navigating Colab, writing and running Python code, and understanding why each concept matters in practical data work.</p>
+
+    <div class="module-grid">
+      <div class="module-box">
+        <div class="module-box-head">Learning Objectives</div>
+        <div class="module-box-body">
+          <ul>
+            <li>Describe the analytics workflow and the role of each tool in the programme</li>
+            <li>Navigate and use Google Colab for Python development</li>
+            <li>Write syntactically correct Python code using variables and data types</li>
+            <li>Apply operators and expressions to perform calculations</li>
+            <li>Use conditional logic (if/elif/else) to control programme flow</li>
+            <li>Write and apply loops (for and while) to automate repetitive tasks</li>
+            <li>Define and call Python functions with parameters and return values</li>
+            <li>Create and manipulate lists and dictionaries</li>
+          </ul>
+        </div>
+      </div>
+      <div class="module-box">
+        <div class="module-box-head">Core Topics</div>
+        <div class="module-box-body">
+          <ul>
+            <li>What is analytics? Problem framing and the data workflow</li>
+            <li>Google Colab: notebook navigation, cells, and file management</li>
+            <li>Python syntax, comments, and code readability</li>
+            <li>Variables and data types: integers, floats, strings, booleans</li>
+            <li>Operators: arithmetic, comparison, logical</li>
+            <li>Input, output, and print formatting</li>
+            <li>Lists: indexing, slicing, appending, iteration</li>
+            <li>Dictionaries: key-value pairs, accessing, updating</li>
+            <li>Conditional logic: if, elif, else</li>
+            <li>Loops: for loops, while loops, range()</li>
+            <li>Functions: definition, parameters, return values, scope</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="module-grid">
+      <div class="module-box">
+        <div class="module-box-head">Pre-Work Activities</div>
+        <div class="module-box-body">
+          <ul>
+            <li>Watch: Introduction to the analytics workflow (video)</li>
+            <li>Watch: Google Colab setup and navigation (video)</li>
+            <li>Read: Module 1 lesson notes — Python fundamentals</li>
+            <li>Complete: Guided code-along exercise — your first Python notebook</li>
+            <li>Complete: Pre-work quiz (submitted before the live workshop)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="module-box">
+        <div class="module-box-head">Live Workshop Focus</div>
+        <div class="module-box-body">
+          <ul>
+            <li>Instructor-led demonstration of Colab workflows</li>
+            <li>Hands-on: writing functions and using conditional logic</li>
+            <li>Group challenge: solving a structured logic problem in Python</li>
+            <li>Live troubleshooting and Q&amp;A</li>
+            <li>Preview of Module 2 — the role of data structures in analysis</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="module-grid">
+      <div class="module-box">
+        <div class="module-box-head">Practical Exercise</div>
+        <div class="module-box-body">
+          <ul>
+            <li>Write a Python notebook in Colab that uses variables, conditional logic, and a loop to analyse a small manually entered dataset</li>
+            <li>Define at least two functions to perform a calculation relevant to a workplace context (e.g. computing averages, categorising values)</li>
+            <li>Add clear markdown explanations above each code section</li>
+          </ul>
+        </div>
+      </div>
+      <div class="module-box">
+        <div class="module-box-head">Module Assignment &amp; Output</div>
+        <div class="module-box-body">
+          <ul>
+            <li><strong>Assignment:</strong> Annotated Python notebook solving a provided analytical problem using the module's core concepts</li>
+            <li><strong>Output:</strong> A complete, clean Colab notebook demonstrating Python fundamentals — the first item in the learner's portfolio</li>
+            <li><strong>Capstone link:</strong> The problem-framing and Python foundation skills established here are directly applied in the Module 6 capstone</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="module-outcome">
+      <div class="module-outcome-label">Module Outcome</div>
+      <p>Learners complete Module 1 with a working Google Colab environment, a solid grasp of Python fundamentals, and the confidence to write structured, purposeful code. They understand how Python fits into the broader analytics workflow and are ready to apply these foundations to real datasets in Module 2.</p>
+    </div>
+  </div>
+  <div class="page-footer">
+    <span class="ftr-left">Accelerated Data Analytics Bootcamp</span>
+    <span class="ftr-right">www.sianalytics.org</span>
+    <span class="page-num">8</span>
+  </div>
+</div>
+
+
+<!-- ============================================================
+     PAGE 9 — MODULE 2
+============================================================ -->
+<div class="page">
+  <div class="page-header">
+    <span class="hdr-brand">SI Analytics</span>
+    <span class="hdr-title">Module 2</span>
+  </div>
+  <div class="content">
+    <div class="module-banner">
+      <div class="module-num-badge">M2</div>
+      <div class="module-banner-text">
+        <div class="module-banner-eyebrow">Module Two · Week Two</div>
+        <div class="module-banner-title">Data Wrangling &amp; Cleaning with Python</div>
+        <div class="module-banner-subtitle">Work with real datasets — import, inspect, clean, and prepare data for analysis using Pandas</div>
+        <div class="module-tools-row">
+          <span class="module-tool-tag">Python</span>
+          <span class="module-tool-tag">Pandas</span>
+          <span class="module-tool-tag">NumPy</span>
+          <span class="module-tool-tag">Google Colab</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="module-stats">
+      <div class="module-stat"><div class="module-stat-val">~12h</div><div class="module-stat-label">Estimated Effort</div></div>
+      <div class="module-stat"><div class="module-stat-val">2h</div><div class="module-stat-label">Live Workshop</div></div>
+      <div class="module-stat"><div class="module-stat-val">3h</div><div class="module-stat-label">Pre-Work</div></div>
+      <div class="module-stat"><div class="module-stat-val">1</div><div class="module-stat-label">Assignment</div></div>
+    </div>
+
+    <p style="margin-bottom:4mm;"><strong>Strategic purpose:</strong> Real-world data is rarely clean. Module 2 is where learners confront the practical realities of working with actual datasets — inconsistent formats, missing values, duplicate records, and poorly labelled columns. Mastering data wrangling is the single most valuable skill for any analyst, and this module develops it systematically using Pandas, the foundation of Python-based data work.</p>
+
+    <div class="module-grid">
+      <div class="module-box">
+        <div class="module-box-head">Learning Objectives</div>
+        <div class="module-box-body">
+          <ul>
+            <li>Import CSV and Excel files into Pandas DataFrames</li>
+            <li>Inspect datasets: shape, dtypes, info(), describe(), head()</li>
+            <li>Assess data quality: identify missing values, duplicates, and type errors</li>
+            <li>Rename columns and manage data types effectively</li>
+            <li>Filter rows and select columns using loc, iloc, and boolean indexing</li>
+            <li>Sort data and apply conditional transformations</li>
+            <li>Handle missing values: identify, fill, and drop appropriately</li>
+            <li>Clean text data: strip whitespace, standardise case, correct entries</li>
+            <li>Create new variables through calculation and recoding</li>
+            <li>Export clean datasets to CSV and Excel</li>
+          </ul>
+        </div>
+      </div>
+      <div class="module-box">
+        <div class="module-box-head">Core Topics</div>
+        <div class="module-box-body">
+          <ul>
+            <li>Introduction to NumPy arrays and operations (foundations)</li>
+            <li>Pandas Series and DataFrames: structure and navigation</li>
+            <li>Importing CSV and Excel files with pd.read_csv() and pd.read_excel()</li>
+            <li>Dataset inspection and profiling</li>
+            <li>Selecting columns, filtering rows, conditional selection</li>
+            <li>Sorting: sort_values(), sort_index()</li>
+            <li>Renaming columns, standardising naming conventions</li>
+            <li>Data type management: astype(), datetime conversion</li>
+            <li>Missing values: isnull(), dropna(), fillna(), interpolation</li>
+            <li>Duplicate records: duplicated(), drop_duplicates()</li>
+            <li>Text cleaning: str.strip(), str.lower(), str.replace()</li>
+            <li>Creating and transforming variables: apply(), map(), np.where()</li>
+            <li>Exporting: to_csv(), to_excel()</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="module-grid">
+      <div class="module-box">
+        <div class="module-box-head">Pre-Work Activities</div>
+        <div class="module-box-body">
+          <ul>
+            <li>Watch: Introduction to Pandas — Series and DataFrames (video)</li>
+            <li>Watch: Importing and inspecting data (video)</li>
+            <li>Read: Module 2 lesson notes — data wrangling and cleaning</li>
+            <li>Complete: Guided code-along — loading and inspecting a provided dataset</li>
+            <li>Complete: Pre-work quiz</li>
+          </ul>
+        </div>
+      </div>
+      <div class="module-box">
+        <div class="module-box-head">Practical Exercise &amp; Assignment</div>
+        <div class="module-box-body">
+          <ul>
+            <li>Load a provided real-world dataset (e.g. public health records, organisational data) with deliberate data quality issues</li>
+            <li>Conduct a documented data quality assessment identifying all issues found</li>
+            <li>Apply a structured cleaning workflow to resolve each issue</li>
+            <li>Create at least two new analytical variables</li>
+            <li>Export the clean dataset and document the full workflow in markdown</li>
+            <li><strong>Output:</strong> A clean, export-ready dataset with a fully annotated Colab notebook</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="module-outcome">
+      <div class="module-outcome-label">Module Outcome</div>
+      <p>Learners complete Module 2 with the ability to take any messy, real-world dataset and produce a clean, structured, export-ready file using a documented and reproducible Python workflow. This clean dataset becomes direct input for the analysis work in Module 3 and ultimately feeds into the capstone project.</p>
+    </div>
+  </div>
+  <div class="page-footer">
+    <span class="ftr-left">Accelerated Data Analytics Bootcamp</span>
+    <span class="ftr-right">www.sianalytics.org</span>
+    <span class="page-num">9</span>
+  </div>
+</div>
+
+
+<!-- ============================================================
+     PAGE 10 — MODULE 3
+============================================================ -->
+<div class="page">
+  <div class="page-header">
+    <span class="hdr-brand">SI Analytics</span>
+    <span class="hdr-title">Module 3</span>
+  </div>
+  <div class="content">
+    <div class="module-banner">
+      <div class="module-num-badge">M3</div>
+      <div class="module-banner-text">
+        <div class="module-banner-eyebrow">Module Three · Week Three</div>
+        <div class="module-banner-title">Data Analysis with Python</div>
+        <div class="module-banner-subtitle">Explore, aggregate, and interrogate data — translating analytical questions into structured outputs</div>
+        <div class="module-tools-row">
+          <span class="module-tool-tag">Python</span>
+          <span class="module-tool-tag">Pandas</span>
+          <span class="module-tool-tag">Google Colab</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="module-stats">
+      <div class="module-stat"><div class="module-stat-val">~12h</div><div class="module-stat-label">Estimated Effort</div></div>
+      <div class="module-stat"><div class="module-stat-val">2h</div><div class="module-stat-label">Live Workshop</div></div>
+      <div class="module-stat"><div class="module-stat-val">3h</div><div class="module-stat-label">Pre-Work</div></div>
+      <div class="module-stat"><div class="module-stat-val">1</div><div class="module-stat-label">Assignment</div></div>
+    </div>
+
+    <p style="margin-bottom:4mm;"><strong>Strategic purpose:</strong> With clean data established in Module 2, learners now move into the analytical stage — asking and answering structured questions using Python. This module develops the core analytical toolkit: grouping, aggregating, reshaping, merging, and computing descriptive statistics. Learners also practise translating real-world business or programme questions into concrete analyses, a skill central to working effectively as an analyst.</p>
+
+    <div class="module-grid">
+      <div class="module-box">
+        <div class="module-box-head">Learning Objectives</div>
+        <div class="module-box-body">
+          <ul>
+            <li>Compute descriptive statistics using Pandas and NumPy functions</li>
+            <li>Group data and apply aggregation functions with groupby()</li>
+            <li>Calculate frequency distributions, proportions, and cross-tabulations</li>
+            <li>Reshape data between wide and long formats using melt() and pivot_table()</li>
+            <li>Merge and join datasets using merge() and concat()</li>
+            <li>Identify and describe patterns, outliers, and group differences</li>
+            <li>Translate business questions into structured analytical steps</li>
+            <li>Produce analysis-ready outputs for use in Power BI or Excel</li>
+          </ul>
+        </div>
+      </div>
+      <div class="module-box">
+        <div class="module-box-head">Core Topics</div>
+        <div class="module-box-body">
+          <ul>
+            <li>Descriptive statistics: mean, median, mode, std, min, max, percentiles</li>
+            <li>Grouping and aggregation: groupby(), agg(), transform()</li>
+            <li>Frequency distributions: value_counts(), crosstab()</li>
+            <li>Creating analytical variables: calculated fields, conditional categories</li>
+            <li>Reshaping: melt(), pivot(), pivot_table()</li>
+            <li>Merging datasets: merge() with inner, left, right, outer joins</li>
+            <li>Concatenation: pd.concat() for row and column binding</li>
+            <li>Comparing groups: filtering subsets, computing group differences</li>
+            <li>Identifying patterns and anomalies</li>
+            <li>Exporting analysis-ready summaries to CSV and Excel for downstream tools</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="module-grid">
+      <div class="module-box">
+        <div class="module-box-head">Pre-Work Activities</div>
+        <div class="module-box-body">
+          <ul>
+            <li>Watch: Grouping and aggregation with Pandas (video)</li>
+            <li>Watch: Merging and reshaping datasets (video)</li>
+            <li>Read: Module 3 lesson notes — data analysis and exploration</li>
+            <li>Complete: Guided code-along — computing grouped statistics on a provided dataset</li>
+            <li>Complete: Pre-work quiz</li>
+          </ul>
+        </div>
+      </div>
+      <div class="module-box">
+        <div class="module-box-head">Practical Exercise &amp; Assignment</div>
+        <div class="module-box-body">
+          <ul>
+            <li>Using the clean dataset from Module 2, answer a set of provided analytical questions using groupby, aggregation, and merging</li>
+            <li>Compute descriptive statistics across relevant groups and document findings in clear markdown</li>
+            <li>Reshape one dataset from wide to long format and demonstrate correct merging of two related datasets</li>
+            <li>Export a summary analysis table as input for the Module 5 Power BI exercise</li>
+            <li><strong>Output:</strong> Analytical notebook with documented findings and export-ready data summaries</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="module-outcome">
+      <div class="module-outcome-label">Module Outcome</div>
+      <p>Learners complete Module 3 having conducted a structured, multi-question analysis of a real dataset using Python. They can now move fluidly between cleaning and analysis, understand how to produce summary outputs for dashboard consumption, and approach analytical tasks with a structured, question-driven methodology. The data outputs from this module feed directly into Module 5 (Power BI) and the capstone project.</p>
+    </div>
+  </div>
+  <div class="page-footer">
+    <span class="ftr-left">Accelerated Data Analytics Bootcamp</span>
+    <span class="ftr-right">www.sianalytics.org</span>
+    <span class="page-num">10</span>
+  </div>
+</div>
+
+
+<!-- ============================================================
+     PAGE 11 — MODULE 4
+============================================================ -->
+<div class="page">
+  <div class="page-header">
+    <span class="hdr-brand">SI Analytics</span>
+    <span class="hdr-title">Module 4</span>
+  </div>
+  <div class="content">
+    <div class="module-banner">
+      <div class="module-num-badge">M4</div>
+      <div class="module-banner-text">
+        <div class="module-banner-eyebrow">Module Four · Week Four</div>
+        <div class="module-banner-title">Intermediate Microsoft Excel for Analysts</div>
+        <div class="module-banner-subtitle">Build professional analytical competency in Excel — structured reporting, advanced functions, and practical business tools</div>
+        <div class="module-tools-row">
+          <span class="module-tool-tag">Microsoft Excel</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="module-stats">
+      <div class="module-stat"><div class="module-stat-val">~11h</div><div class="module-stat-label">Estimated Effort</div></div>
+      <div class="module-stat"><div class="module-stat-val">2h</div><div class="module-stat-label">Live Workshop</div></div>
+      <div class="module-stat"><div class="module-stat-val">2–3h</div><div class="module-stat-label">Pre-Work</div></div>
+      <div class="module-stat"><div class="module-stat-val">1</div><div class="module-stat-label">Assignment</div></div>
+    </div>
+
+    <p style="margin-bottom:4mm;"><strong>Strategic purpose:</strong> Microsoft Excel remains one of the most widely used analytical tools in organisations worldwide. Module 4 moves well beyond basic spreadsheet use to develop intermediate competency — the kind of structured, formula-driven, audit-safe Excel practice that employers value. These skills both stand alone and integrate naturally with the Power BI workflow in Module 5.</p>
+
+    <div class="module-grid">
+      <div class="module-box">
+        <div class="module-box-head">Learning Objectives</div>
+        <div class="module-box-body">
+          <ul>
+            <li>Organise workbooks and worksheets for clarity and auditability</li>
+            <li>Create and manage Excel Tables with structured references</li>
+            <li>Apply data validation to control data entry and reduce errors</li>
+            <li>Use text functions to clean and standardise imported data</li>
+            <li>Apply date functions for time-based calculations and reporting</li>
+            <li>Write nested logical functions: IF, IFS, AND, OR</li>
+            <li>Use XLOOKUP and INDEX/MATCH for flexible data retrieval</li>
+            <li>Apply SUMIFS and COUNTIFS for conditional aggregation</li>
+            <li>Build PivotTables and PivotCharts for dynamic reporting</li>
+            <li>Apply conditional formatting to highlight patterns and exceptions</li>
+            <li>Construct a practical, structured management report</li>
+            <li>Perform quality checks and auditability reviews on workbooks</li>
+          </ul>
+        </div>
+      </div>
+      <div class="module-box">
+        <div class="module-box-head">Core Topics</div>
+        <div class="module-box-body">
+          <ul>
+            <li>Workbook organisation: naming conventions, structured layout, navigation</li>
+            <li>Excel Tables: creating, naming, using structured references</li>
+            <li>Data validation: dropdown lists, numeric restrictions, error messages</li>
+            <li>Data cleaning: TRIM, CLEAN, PROPER, UPPER, LOWER, SUBSTITUTE</li>
+            <li>Text functions: LEFT, RIGHT, MID, FIND, LEN, CONCAT, TEXTJOIN</li>
+            <li>Date functions: TODAY, NOW, DATEDIF, EOMONTH, YEAR, MONTH</li>
+            <li>Logical functions: IF, IFS, AND, OR, IFERROR, IFBLANK</li>
+            <li>Lookup functions: XLOOKUP, INDEX, MATCH, VLOOKUP (legacy context)</li>
+            <li>Conditional aggregation: SUMIFS, COUNTIFS, AVERAGEIFS</li>
+            <li>PivotTables: setup, fields, grouping, filtering, calculated fields</li>
+            <li>PivotCharts: chart types, formatting, slicers</li>
+            <li>Conditional formatting: colour scales, data bars, icon sets, rule-based</li>
+            <li>Dashboard concepts: summary sheets, linked cells, layout principles</li>
+            <li>Quality checks: formula auditing, trace precedents, error checks</li>
+            <li>Integration: exporting structured Excel files for Power BI import</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="module-grid">
+      <div class="module-box">
+        <div class="module-box-head">Pre-Work Activities</div>
+        <div class="module-box-body">
+          <ul>
+            <li>Watch: Excel Tables and structured referencing (video)</li>
+            <li>Watch: Lookup functions — XLOOKUP and INDEX/MATCH (video)</li>
+            <li>Watch: PivotTables — setup and field configuration (video)</li>
+            <li>Read: Module 4 lesson notes — intermediate Excel for analysts</li>
+            <li>Complete: Guided exercise — building a SUMIFS-based summary from a provided dataset</li>
+            <li>Complete: Pre-work quiz</li>
+          </ul>
+        </div>
+      </div>
+      <div class="module-box">
+        <div class="module-box-head">Practical Exercise &amp; Assignment</div>
+        <div class="module-box-body">
+          <ul>
+            <li>Using a provided structured dataset, build an analytical workbook that includes: an Excel Table with data validation, XLOOKUP-based data retrieval, SUMIFS and COUNTIFS summary calculations, a PivotTable with grouped analysis, a PivotChart with conditional formatting, and a clean summary reporting sheet</li>
+            <li>Apply conditional formatting to highlight key values</li>
+            <li>Conduct a documented quality check of all formulas</li>
+            <li><strong>Output:</strong> A structured, formula-driven Excel workbook with a summary report — a standalone portfolio piece and input for Module 5</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="module-outcome">
+      <div class="module-outcome-label">Module Outcome</div>
+      <p>Learners complete Module 4 with a professional, intermediate-level Excel competency that goes well beyond basic use. They can construct audit-safe, formula-driven workbooks, produce dynamic PivotTable reports, and prepare structured data files for use in Power BI — positioning them strongly for both independent analytical work and collaboration in data-driven organisations.</p>
+    </div>
+  </div>
+  <div class="page-footer">
+    <span class="ftr-left">Accelerated Data Analytics Bootcamp</span>
+    <span class="ftr-right">www.sianalytics.org</span>
+    <span class="page-num">11</span>
+  </div>
+</div>
+
+
+<!-- ============================================================
+     PAGE 12 — MODULE 5
+============================================================ -->
+<div class="page">
+  <div class="page-header">
+    <span class="hdr-brand">SI Analytics</span>
+    <span class="hdr-title">Module 5</span>
+  </div>
+  <div class="content">
+    <div class="module-banner">
+      <div class="module-num-badge">M5</div>
+      <div class="module-banner-text">
+        <div class="module-banner-eyebrow">Module Five · Week Five</div>
+        <div class="module-banner-title">Power BI Data Modelling &amp; Dashboard Development</div>
+        <div class="module-banner-subtitle">Transform analytical outputs into interactive, decision-ready dashboards using Power BI Desktop</div>
+        <div class="module-tools-row">
+          <span class="module-tool-tag">Power BI Desktop</span>
+          <span class="module-tool-tag">Power Query</span>
+          <span class="module-tool-tag">DAX</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="module-stats">
+      <div class="module-stat"><div class="module-stat-val">~12h</div><div class="module-stat-label">Estimated Effort</div></div>
+      <div class="module-stat"><div class="module-stat-val">2h</div><div class="module-stat-label">Live Workshop</div></div>
+      <div class="module-stat"><div class="module-stat-val">3h</div><div class="module-stat-label">Pre-Work</div></div>
+      <div class="module-stat"><div class="module-stat-val">1</div><div class="module-stat-label">Assignment</div></div>
+    </div>
+
+    <p style="margin-bottom:4mm;"><strong>Strategic purpose:</strong> Power BI is the programme's primary business intelligence and dashboarding tool. Module 5 brings together the data prepared in Python (Modules 1–3) and Excel (Module 4) and transforms it into a structured, interactive analytical report. Learners build a complete data model, write DAX measures, and design a dashboard that communicates clearly to both analytical and executive audiences.</p>
+
+    <div class="module-grid">
+      <div class="module-box">
+        <div class="module-box-head">Learning Objectives</div>
+        <div class="module-box-body">
+          <ul>
+            <li>Navigate Power BI Desktop and understand its core interface areas</li>
+            <li>Import data from Excel and CSV sources into Power BI</li>
+            <li>Use Power Query to clean, transform, and reshape imported data</li>
+            <li>Build a data model with multiple tables and defined relationships</li>
+            <li>Understand and apply star-schema principles to model design</li>
+            <li>Write calculated columns and DAX measures for key metrics</li>
+            <li>Create and format KPI visuals, cards, and charts</li>
+            <li>Apply filters, slicers, and drill-through where appropriate</li>
+            <li>Design a dashboard with clear visual hierarchy and narrative flow</li>
+            <li>Apply data storytelling principles to guide stakeholder interpretation</li>
+            <li>Conduct a quality assurance review of the data model and dashboard</li>
+          </ul>
+        </div>
+      </div>
+      <div class="module-box">
+        <div class="module-box-head">Core Topics</div>
+        <div class="module-box-body">
+          <ul>
+            <li>Power BI Desktop: interface, views (Report, Data, Model), file management</li>
+            <li>Importing Excel and CSV files</li>
+            <li>Power Query Editor: transformations, data type management, merge queries</li>
+            <li>Data modelling: tables, relationships, cardinality, cross-filter direction</li>
+            <li>Star-schema concepts: fact tables, dimension tables</li>
+            <li>Calculated columns vs. measures — when to use each</li>
+            <li>DAX fundamentals: SUM, COUNT, AVERAGE, IF, CALCULATE, DIVIDE</li>
+            <li>Time intelligence basics: filtering by date (where applicable)</li>
+            <li>KPIs and conditional formatting in visuals</li>
+            <li>Chart selection: bar, line, column, donut, scatter, map (where appropriate)</li>
+            <li>Filters pane, slicers, and drill-through pages</li>
+            <li>Dashboard layout: visual hierarchy, alignment, spacing, colour use</li>
+            <li>Data storytelling: page flow, narrative structure, key message panels</li>
+            <li>Quality assurance: model validation, measure testing, visual accuracy</li>
+            <li>Publishing and sharing concepts (subject to licensing availability)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="module-grid">
+      <div class="module-box">
+        <div class="module-box-head">Pre-Work Activities</div>
+        <div class="module-box-body">
+          <ul>
+            <li>Watch: Power BI Desktop orientation and interface tour (video)</li>
+            <li>Watch: Power Query — importing and transforming data (video)</li>
+            <li>Watch: Building a data model and defining relationships (video)</li>
+            <li>Watch: Introduction to DAX measures (video)</li>
+            <li>Read: Module 5 lesson notes — data modelling and dashboard design</li>
+            <li>Complete: Guided code-along — building a simple Power BI report from provided data</li>
+          </ul>
+        </div>
+      </div>
+      <div class="module-box">
+        <div class="module-box-head">Practical Exercise &amp; Assignment</div>
+        <div class="module-box-body">
+          <ul>
+            <li>Import the clean datasets prepared in Modules 2–4 into Power BI</li>
+            <li>Build a complete data model with at least two related tables</li>
+            <li>Write a minimum of three DAX measures (e.g. total, average, a conditional metric)</li>
+            <li>Design a two-page dashboard: one overview page and one detail/drill page</li>
+            <li>Apply at least two slicers and ensure all visuals filter correctly</li>
+            <li>Include a narrative text element explaining the key insight</li>
+            <li><strong>Output:</strong> A fully functional Power BI .pbix file with a complete data model, DAX measures, and an interactive dashboard</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="module-outcome">
+      <div class="module-outcome-label">Module Outcome</div>
+      <p>Learners complete Module 5 with a working knowledge of Power BI's core capabilities — from data import and Power Query transformation through to data modelling, DAX measure writing, and dashboard design. They produce an interactive, well-structured Power BI report that demonstrates their ability to communicate analytical findings through visual design. This module prepares them directly for the integrated capstone project in Module 6.</p>
+    </div>
+  </div>
+  <div class="page-footer">
+    <span class="ftr-left">Accelerated Data Analytics Bootcamp</span>
+    <span class="ftr-right">www.sianalytics.org</span>
+    <span class="page-num">12</span>
+  </div>
+</div>
+
+
+<!-- ============================================================
+     PAGE 13 — MODULE 6 / CAPSTONE
+============================================================ -->
+<div class="page">
+  <div class="page-header">
+    <span class="hdr-brand">SI Analytics</span>
+    <span class="hdr-title">Module 6 — Capstone Project</span>
+  </div>
+  <div class="content">
+    <div class="module-banner">
+      <div class="module-num-badge">M6</div>
+      <div class="module-banner-text">
+        <div class="module-banner-eyebrow">Module Six · Week Six</div>
+        <div class="module-banner-title">Integrated Capstone Project &amp; Presentation</div>
+        <div class="module-banner-subtitle">Apply every skill from the programme to a real analytical problem — from raw data to executive dashboard</div>
+        <div class="module-tools-row">
+          <span class="module-tool-tag">Python</span>
+          <span class="module-tool-tag">Excel</span>
+          <span class="module-tool-tag">Power BI</span>
+          <span class="module-tool-tag">All Tools</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="sidebar-layout">
+      <div>
+        <p style="margin-bottom:3mm;"><strong>Purpose:</strong> The capstone project is the culmination of six weeks of structured skill-building. Learners apply every capability developed in the programme — Python data preparation, Excel-based analysis, Power BI data modelling, and dashboard design — to a single, coherent analytical problem. The result is a portfolio-ready piece of work that demonstrates professional competency to employers, funders, or academic reviewers.</p>
+
+        <div class="module-box" style="margin-bottom:3mm;">
+          <div class="module-box-head">Capstone Workflow</div>
+          <div class="module-box-body">
+            <div class="deliverable-row"><div class="deliverable-num">1</div><div class="deliverable-text"><strong>Problem Definition:</strong> Identify a clear analytical question within a chosen domain. Frame the scope, audience, and expected outputs.</div></div>
+            <div class="deliverable-row"><div class="deliverable-num">2</div><div class="deliverable-text"><strong>Dataset Selection:</strong> Select or obtain an appropriate dataset — publicly available, organisational (with approval), or provided by SI Analytics for this purpose.</div></div>
+            <div class="deliverable-row"><div class="deliverable-num">3</div><div class="deliverable-text"><strong>Data Preparation:</strong> Clean and wrangle the dataset using Python in Google Colab, documenting every step with clear markdown annotation.</div></div>
+            <div class="deliverable-row"><div class="deliverable-num">4</div><div class="deliverable-text"><strong>Analysis:</strong> Conduct a structured exploratory and descriptive analysis in Python, generating grouped summaries and analytical outputs.</div></div>
+            <div class="deliverable-row"><div class="deliverable-num">5</div><div class="deliverable-text"><strong>Power BI Modelling:</strong> Import prepared data, build a data model with defined relationships, and write DAX measures for key metrics.</div></div>
+            <div class="deliverable-row"><div class="deliverable-num">6</div><div class="deliverable-text"><strong>Dashboard Development:</strong> Design a multi-page, interactive Power BI dashboard with clear visual hierarchy, KPIs, filters, and a data narrative.</div></div>
+            <div class="deliverable-row"><div class="deliverable-num">7</div><div class="deliverable-text"><strong>Executive Summary:</strong> Write a concise, structured summary of findings and recommendations for a non-technical audience.</div></div>
+            <div class="deliverable-row"><div class="deliverable-num">8</div><div class="deliverable-text"><strong>Presentation:</strong> Present the project to the cohort in a structured, timed session with peer review and instructor feedback.</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="sidebar-box">
+          <div class="sidebar-box-title">Possible Capstone Themes</div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:2mm;">
+            <div style="background:rgba(26,127,122,.2); border-radius:1.5mm; padding:2.5mm 3mm; font-size:7.5pt; color:var(--teal-light); font-weight:700; text-align:center;">Public Health</div>
+            <div style="background:rgba(26,127,122,.2); border-radius:1.5mm; padding:2.5mm 3mm; font-size:7.5pt; color:var(--teal-light); font-weight:700; text-align:center;">Finance</div>
+            <div style="background:rgba(26,127,122,.2); border-radius:1.5mm; padding:2.5mm 3mm; font-size:7.5pt; color:var(--teal-light); font-weight:700; text-align:center;">Sales &amp; Revenue</div>
+            <div style="background:rgba(26,127,122,.2); border-radius:1.5mm; padding:2.5mm 3mm; font-size:7.5pt; color:var(--teal-light); font-weight:700; text-align:center;">HR &amp; Workforce</div>
+            <div style="background:rgba(26,127,122,.2); border-radius:1.5mm; padding:2.5mm 3mm; font-size:7.5pt; color:var(--teal-light); font-weight:700; text-align:center;">M&amp;E</div>
+            <div style="background:rgba(26,127,122,.2); border-radius:1.5mm; padding:2.5mm 3mm; font-size:7.5pt; color:var(--teal-light); font-weight:700; text-align:center;">Operations</div>
+            <div style="background:rgba(26,127,122,.2); border-radius:1.5mm; padding:2.5mm 3mm; font-size:7.5pt; color:var(--teal-light); font-weight:700; text-align:center;">Development</div>
+            <div style="background:rgba(26,127,122,.2); border-radius:1.5mm; padding:2.5mm 3mm; font-size:7.5pt; color:var(--teal-light); font-weight:700; text-align:center;">Supply Chain</div>
+          </div>
+        </div>
+
+        <div class="sidebar-box" style="margin-top:3mm;">
+          <div class="sidebar-box-title">Required Deliverables</div>
+          <ul>
+            <li>Annotated Python notebook (Colab)</li>
+            <li>Clean dataset (CSV or Excel)</li>
+            <li>Power BI .pbix file</li>
+            <li>Multi-page interactive dashboard</li>
+            <li>Executive summary (written)</li>
+            <li>Cohort presentation (timed)</li>
+          </ul>
+        </div>
+
+        <div class="sidebar-box" style="margin-top:3mm;">
+          <div class="sidebar-box-title">Portfolio Value</div>
+          <ul>
+            <li>Demonstrates end-to-end capability</li>
+            <li>Real dataset — not a classroom exercise</li>
+            <li>Shareable with employers or funders</li>
+            <li>Reflects professional analytical standards</li>
+            <li>Produced independently by the learner</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer">
+    <span class="ftr-left">Accelerated Data Analytics Bootcamp</span>
+    <span class="ftr-right">www.sianalytics.org</span>
+    <span class="page-num">13</span>
+  </div>
+</div>
+
+
+<!-- ============================================================
+     PAGE 14 — ASSESSMENT + RUBRIC
+============================================================ -->
+<div class="page">
+  <div class="page-header">
+    <span class="hdr-brand">SI Analytics</span>
+    <span class="hdr-title">Assessment &amp; Grading</span>
+  </div>
+  <div class="content">
+    <div class="section-eyebrow">Assessment Framework</div>
+    <div class="section-title-sm">How Performance Is Evaluated</div>
+    <div class="divider-teal"></div>
+
+    <p style="margin-bottom:4mm;">Assessment in the bootcamp is distributed across the full six-module programme. This approach rewards consistent engagement and progressive skill development, rather than placing undue weight on any single submission. The final capstone project carries the highest individual weighting, reflecting its role as a comprehensive demonstration of end-to-end analytical capability.</p>
+
+    <div class="callout" style="margin-bottom:4mm; background:var(--teal-pale); border-left: 1mm solid var(--teal);">
+      <p style="color:var(--navy); font-size:8pt;"><strong style="color:var(--teal);">Proposed grading structure (subject to final SI Analytics approval).</strong> The percentages below reflect the programme's intended design. Learners are advised to confirm the finalised assessment policy with SI Analytics before the commencement of their cohort.</p>
+    </div>
+
+    <div style="margin-bottom:5mm;">
+      <div class="assess-bar-row">
+        <div class="assess-bar-label"><strong>Pre-Work Completion &amp; Module Quizzes</strong><span>15%</span></div>
+        <div class="assess-bar-track"><div class="assess-bar-fill" style="width:15%;"></div></div>
+      </div>
+      <div class="assess-bar-row">
+        <div class="assess-bar-label"><strong>Guided Practical Exercises (Code-Alongs)</strong><span>15%</span></div>
+        <div class="assess-bar-track"><div class="assess-bar-fill" style="width:15%;"></div></div>
+      </div>
+      <div class="assess-bar-row">
+        <div class="assess-bar-label"><strong>Weekly Module Assignments (Modules 1–5)</strong><span>25%</span></div>
+        <div class="assess-bar-track"><div class="assess-bar-fill gold" style="width:25%;"></div></div>
+      </div>
+      <div class="assess-bar-row">
+        <div class="assess-bar-label"><strong>Participation &amp; Peer Engagement</strong><span>10%</span></div>
+        <div class="assess-bar-track"><div class="assess-bar-fill navy" style="width:10%;"></div></div>
+      </div>
+      <div class="assess-bar-row">
+        <div class="assess-bar-label"><strong>Final Capstone Project (Module 6)</strong><span>35%</span></div>
+        <div class="assess-bar-track"><div class="assess-bar-fill gold" style="width:35%;"></div></div>
+      </div>
+    </div>
+
+    <div class="card" style="background:var(--navy); color:white; margin-bottom:5mm;">
+      <div style="color:var(--teal-light); font-weight:700; font-size:9pt; margin-bottom:2mm;">Completion Threshold</div>
+      <p style="color:rgba(255,255,255,.8); font-size:8.5pt;">Learners are recommended to achieve a minimum overall score of <strong style="color:var(--white);">75%</strong> to qualify for the SI Analytics Certificate of Completion. Final threshold requirements are subject to confirmation by SI Analytics and will be communicated to enrolled learners prior to programme commencement.</p>
+    </div>
+
+    <hr class="divider"/>
+
+    <div class="section-eyebrow">Capstone Grading Rubric</div>
+    <div class="section-title-sm">How the Capstone Project Is Assessed</div>
+    <div class="divider-teal"></div>
+
+    <table class="rubric-table">
+      <thead>
+        <tr>
+          <th style="width:35mm;">Criterion</th>
+          <th>Performance Expectation</th>
+          <th style="width:15mm;">Weight</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Problem Definition</td>
+          <td>A clear, specific analytical question is identified. The scope, audience, and expected output are explicitly stated and appropriate to the dataset.</td>
+          <td>10%</td>
+        </tr>
+        <tr>
+          <td>Data Preparation</td>
+          <td>The dataset is systematically cleaned and documented using Python. Missing values, duplicates, and type errors are addressed. The workflow is reproducible.</td>
+          <td>15%</td>
+        </tr>
+        <tr>
+          <td>Analytical Accuracy</td>
+          <td>Grouping, aggregation, and descriptive statistics are computed correctly. Analytical outputs are appropriate to the question posed and free of calculation errors.</td>
+          <td>15%</td>
+        </tr>
+        <tr>
+          <td>Data Modelling</td>
+          <td>The Power BI data model is correctly structured with defined relationships. DAX measures are syntactically correct, appropriately named, and logically sound.</td>
+          <td>15%</td>
+        </tr>
+        <tr>
+          <td>Dashboard Functionality</td>
+          <td>All visuals display correct data. Slicers and filters operate as intended. The dashboard is navigable and interactive elements behave correctly.</td>
+          <td>10%</td>
+        </tr>
+        <tr>
+          <td>Visual Design Quality</td>
+          <td>The dashboard applies appropriate chart types, consistent colour use, and clear visual hierarchy. Layout guides the viewer's interpretation without confusion.</td>
+          <td>10%</td>
+        </tr>
+        <tr>
+          <td>Insight Quality</td>
+          <td>Findings are evidence-based and directly address the defined question. Conclusions go beyond description to offer interpretation or contextualised observations.</td>
+          <td>10%</td>
+        </tr>
+        <tr>
+          <td>Documentation</td>
+          <td>Python notebooks are annotated with clear markdown. The executive summary is concise, accurate, and written for a non-technical audience.</td>
+          <td>10%</td>
+        </tr>
+        <tr>
+          <td>Presentation Quality</td>
+          <td>The presentation is well-structured, delivered within the allotted time, and clearly communicates the analytical narrative to the cohort and instructor panel.</td>
+          <td>5%</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="page-footer">
+    <span class="ftr-left">Accelerated Data Analytics Bootcamp</span>
+    <span class="ftr-right">www.sianalytics.org</span>
+    <span class="page-num">14</span>
+  </div>
+</div>
+
+
+<!-- ============================================================
+     PAGE 15 — LEARNER SUPPORT + WHAT YOU'LL LEAVE WITH
+============================================================ -->
+<div class="page">
+  <div class="page-header">
+    <span class="hdr-brand">SI Analytics</span>
+    <span class="hdr-title">Learner Support &amp; Outcomes</span>
+  </div>
+  <div class="content">
+    <div class="section-eyebrow">Learner Support &amp; Community</div>
+    <div class="section-title-sm">Support Throughout the Programme</div>
+    <div class="divider-teal"></div>
+
+    <p style="margin-bottom:4mm;">The bootcamp is designed to be challenging and substantive, but no learner is expected to navigate it alone. A structured support system operates throughout the six modules to ensure that every participant has access to the guidance, feedback, and community they need to succeed.</p>
+
+    <div class="card-grid-3" style="margin-bottom:4mm;">
+      <div class="card">
+        <span class="card-icon">👩‍🏫</span>
+        <div class="card-title">Instructor Guidance</div>
+        <div class="card-body">Every module is facilitated by an experienced instructor who leads the live workshop, reviews assignments, and provides structured written feedback on submitted work.</div>
+      </div>
+      <div class="card">
+        <span class="card-icon">🤝</span>
+        <div class="card-title">Mentor Support</div>
+        <div class="card-body">Learners benefit from mentor guidance throughout the programme, with particular support during the capstone module as they navigate independent project work.</div>
+      </div>
+      <div class="card">
+        <span class="card-icon">❓</span>
+        <div class="card-title">Optional Help Sessions</div>
+        <div class="card-body">Dedicated optional sessions are scheduled each module for questions, troubleshooting, and additional practice. These are supplementary to — not a replacement for — the primary workshop.</div>
+      </div>
+      <div class="card">
+        <span class="card-icon">👥</span>
+        <div class="card-title">Peer Learning Community</div>
+        <div class="card-body">Learners join a cohort community where they can collaborate, ask questions, share progress, and support one another. Community-based learning is a deliberate and structured element of the programme.</div>
+      </div>
+      <div class="card">
+        <span class="card-icon">📝</span>
+        <div class="card-title">Structured Feedback</div>
+        <div class="card-body">All module assignments receive written feedback before the next module begins, ensuring that learners can apply improvements in a timely and progressive way.</div>
+      </div>
+      <div class="card">
+        <span class="card-icon">📚</span>
+        <div class="card-title">Learning Resources</div>
+        <div class="card-body">Professionally prepared lesson notes, pre-recorded videos, and curated reference materials are provided for every module, supporting both pre-work and subsequent review.</div>
+      </div>
+    </div>
+
+    <div class="callout" style="margin-bottom:5mm;">
+      <div class="callout-title">A Note on Support Expectations</div>
+      <p>Support in this programme is structured and purposeful. Learners should expect responsive, professional guidance — not unlimited personal coaching. The help-session model is designed to address genuine technical and conceptual questions, and peer learning is actively encouraged as a complement to instructor support. Learners who engage consistently with the full support ecosystem consistently produce stronger work.</p>
+    </div>
+
+    <hr class="divider"/>
+
+    <div class="section-eyebrow">Programme Outcomes</div>
+    <div class="section-title-sm">What You Will Leave With</div>
+    <div class="divider-teal"></div>
+
+    <div class="card-grid-2">
+      <div class="card card-teal">
+        <div class="card-title">🐍 Applied Python Skills</div>
+        <div class="card-body">A practical, working knowledge of Python for data preparation, cleaning, transformation, and analysis using Pandas in Google Colab — applicable immediately to real datasets in any sector.</div>
+      </div>
+      <div class="card card-teal">
+        <div class="card-title">📊 Intermediate Excel Competency</div>
+        <div class="card-body">A confident, structured approach to Excel — including advanced functions, PivotTables, lookup formulas, and clean workbook practices — at a level valued by employers and organisations.</div>
+      </div>
+      <div class="card card-teal">
+        <div class="card-title">📈 Power BI Dashboard Skills</div>
+        <div class="card-body">The ability to import data, build data models, write DAX measures, and design interactive dashboards in Power BI that communicate analytical findings clearly to any audience.</div>
+      </div>
+      <div class="card card-teal">
+        <div class="card-title">🗂 Portfolio of Real Work</div>
+        <div class="card-body">Five module assignments and a completed capstone project — each produced using real datasets and real tools — forming a tangible, shareable portfolio of practical analytical outputs.</div>
+      </div>
+      <div class="card card-teal">
+        <div class="card-title">🎓 Certificate of Completion</div>
+        <div class="card-body">Subject to meeting the programme's completion requirements, learners receive an SI Analytics Certificate of Completion that confirms their successful participation in the bootcamp.</div>
+      </div>
+      <div class="card card-teal">
+        <div class="card-title">💡 Analytical Confidence</div>
+        <div class="card-body">Six weeks of applied, structured learning — supported by feedback, community, and practical repetition — builds the professional confidence to approach real analytical problems with clarity and rigour.</div>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer">
+    <span class="ftr-left">Accelerated Data Analytics Bootcamp</span>
+    <span class="ftr-right">www.sianalytics.org</span>
+    <span class="page-num">15</span>
+  </div>
+</div>
+
+
+<!-- ============================================================
+     PAGE 16 — WHY SI ANALYTICS + TESTIMONIALS
+============================================================ -->
+<div class="page">
+  <div class="page-header">
+    <span class="hdr-brand">SI Analytics</span>
+    <span class="hdr-title">Why SI Analytics</span>
+  </div>
+  <div class="content">
+    <div class="section-eyebrow">About SI Analytics</div>
+    <div class="section-title">Why SI Analytics</div>
+    <div class="divider-teal"></div>
+
+    <div class="sidebar-layout" style="gap:5mm;">
+      <div>
+        <p>SI Analytics — Strategic Insights and Analytics — is an analytics education and innovation organisation committed to building rigorous, practical data capability in professionals across sectors and geographies. Our programmes are designed by practitioners with direct experience in data analysis, business intelligence, public health, and applied research — not by instructors working at a remove from the analytical work itself.</p>
+
+        <p>We design learning experiences that bridge theory and practice. Every module in this bootcamp has been structured to ensure that what learners encounter in a lesson can be applied to a real dataset by the time the workshop closes. We do not teach tools in isolation — we teach analytical thinking applied through tools.</p>
+
+        <p>Our approach is learner-centred and outcome-driven. We take seriously our responsibility to ensure that the time learners invest in our programmes translates into real, deployable capability. That means building curricula with clear learning objectives, providing substantive feedback on all submitted work, and designing assessments that require genuine understanding rather than surface familiarity.</p>
+
+        <div class="card card-navy" style="margin-top:4mm;">
+          <div class="card-icon">🎯</div>
+          <div class="card-title">Our Commitment</div>
+          <div class="card-body">We do not just teach tools. We build analytical thinkers and problem solvers — professionals who can frame a question, work with data responsibly, and communicate findings with clarity and confidence.</div>
+        </div>
+
+        <div class="card-grid-2" style="margin-top:3mm;">
+          <div class="card card-teal">
+            <div class="card-title">🌍 International Reach</div>
+            <div class="card-body">Our programmes serve professionals across public health, finance, development, research, and business sectors in multiple countries and contexts.</div>
+          </div>
+          <div class="card card-teal">
+            <div class="card-title">📺 Public Resources</div>
+            <div class="card-body">SI Analytics maintains an active YouTube channel (<strong>@SIAnalyticsLab</strong>) with publicly available instructional content for learners at all levels.</div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="sidebar-box">
+          <div class="sidebar-box-title">What We Stand For</div>
+          <ul>
+            <li>Expert-led instruction grounded in real-world analytics</li>
+            <li>Rigorous, applied curriculum design</li>
+            <li>Learner-centred programme delivery</li>
+            <li>Practical relevance across sectors</li>
+            <li>Honest, structured feedback</li>
+            <li>Community-based learning</li>
+            <li>Continuous curriculum improvement</li>
+          </ul>
+        </div>
+
+        <div style="margin-top:3mm; border:0.3mm solid var(--border); border-radius:2mm; overflow:hidden;">
+          <div style="background:var(--teal); color:white; font-size:7pt; font-weight:700; letter-spacing:.08em; text-transform:uppercase; padding:2.5mm 4mm;">Connect With Us</div>
+          <div style="padding:4mm; background:var(--off-white);">
+            <div style="font-size:8pt; color:var(--text-mid); line-height:1.8;">
+              <div>🌐 <a href="https://www.sianalytics.org" style="color:var(--teal);">www.sianalytics.org</a></div>
+              <div>📧 <a href="mailto:contact@sianalytics.org" style="color:var(--teal);">contact@sianalytics.org</a></div>
+              <div>▶ <a href="https://www.youtube.com/@SIAnalyticsLab" style="color:var(--teal);">YouTube: @SIAnalyticsLab</a></div>
+              <div>🔗 <a href="https://www.linkedin.com/company/strategic-insights-analytics-sia/" style="color:var(--teal);">LinkedIn: Strategic Insights and Analytics</a></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider"/>
+
+    <div class="section-eyebrow">Learner Voices</div>
+    <div class="section-title-sm">What Participants Say</div>
+    <div class="divider-teal"></div>
+
+    <div class="card-grid-2">
+      <div class="card" style="background:var(--teal-pale); border-left:1mm solid var(--teal);">
+        <div style="font-size:8pt; color:var(--text-mid); font-style:italic; line-height:1.65; margin-bottom:3mm;">[Verified learner testimonial to be added. Replace this placeholder with a genuine, consented learner quote prior to publication. Do not publish sample copy in its place.]</div>
+        <div style="font-size:7.5pt; color:var(--teal); font-weight:700;">— Learner Name, Role / Organisation</div>
+      </div>
+      <div class="card" style="background:var(--teal-pale); border-left:1mm solid var(--teal);">
+        <div style="font-size:8pt; color:var(--text-mid); font-style:italic; line-height:1.65; margin-bottom:3mm;">[Verified learner testimonial to be added. Replace this placeholder with a genuine, consented learner quote prior to publication. Do not publish sample copy in its place.]</div>
+        <div style="font-size:7.5pt; color:var(--teal); font-weight:700;">— Learner Name, Role / Organisation</div>
+      </div>
+    </div>
+
+    <div style="background:var(--neutral); border-radius:2mm; padding:3mm 5mm; margin-top:3mm;">
+      <p style="font-size:7.5pt; color:var(--text-light); font-style:italic; margin:0;"><strong>Editorial note:</strong> Testimonial placeholders above must be replaced with verified, consented learner endorsements before this brochure is released for distribution. Fabricated or representative testimonials must not appear in any published version of this document.</p>
+    </div>
+  </div>
+  <div class="page-footer">
+    <span class="ftr-left">Accelerated Data Analytics Bootcamp</span>
+    <span class="ftr-right">www.sianalytics.org</span>
+    <span class="page-num">16</span>
+  </div>
+</div>
+
+
+<!-- ============================================================
+     PAGE 17 — FAQ
+============================================================ -->
+<div class="page">
+  <div class="page-header">
+    <span class="hdr-brand">SI Analytics</span>
+    <span class="hdr-title">Frequently Asked Questions</span>
+  </div>
+  <div class="content">
+    <div class="section-eyebrow">FAQs</div>
+    <div class="section-title-sm">Frequently Asked Questions</div>
+    <div class="divider-teal"></div>
+
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:0 8mm;">
+      <div>
+        <div class="faq-item">
+          <div class="faq-q">Is this bootcamp suitable for complete beginners?</div>
+          <div class="faq-a">Yes. The programme is designed to be fully accessible to learners with no prior coding or analytics experience. Module 1 begins from first principles — Python syntax, the Google Colab environment, and core programming concepts — and builds progressively. No prior knowledge of Python, Excel beyond basic use, or Power BI is required or assumed.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">How much time should I expect to commit each week?</div>
+          <div class="faq-a">Plan for approximately 8 to 12 hours per module week. This includes pre-work (2–3 hours), the live workshop (2 hours), the module assignment (3–4 hours), and any optional help session time. Learners who invest consistently in their pre-work and assignments tend to get the most from the live sessions.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">What computer do I need?</div>
+          <div class="faq-a">You will need a computer with a reliable internet connection. Python is taught using Google Colab, which runs entirely in your web browser and requires no local installation. Power BI Desktop is designed for Microsoft Windows; learners using Windows will have access to the full Power BI experience. If you are on macOS, please contact SI Analytics for guidance before enrolling.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Is attendance at the live workshops compulsory?</div>
+          <div class="faq-a">Live workshop attendance is strongly encouraged. The workshops are where instructor-guided practice, live problem solving, and direct peer interaction take place — these are difficult to replicate through recordings alone. Optional help sessions are available as an additional resource. Please check with SI Analytics regarding attendance policies for your specific cohort.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">What happens if I miss a session?</div>
+          <div class="faq-a">Learners who miss a live workshop are responsible for reviewing available recordings and completing the module assignment before the deadline. Optional help sessions provide an opportunity to address questions arising from missed content. Consistent non-attendance may affect overall performance. Contact SI Analytics if you anticipate a significant disruption.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Do I need Microsoft Excel already installed?</div>
+          <div class="faq-a">Microsoft Excel is required for Module 4. A Microsoft 365 subscription or a compatible standalone Excel installation is recommended. Please confirm your access to Excel before the programme begins and contact SI Analytics if you require guidance on software options.</div>
+        </div>
+      </div>
+
+      <div>
+        <div class="faq-item">
+          <div class="faq-q">Is Power BI free to use?</div>
+          <div class="faq-a">Power BI Desktop — which is used throughout Module 5 and the capstone — is available as a free download from Microsoft and is the version used in this programme. Power BI's cloud-based sharing and publishing features may require a Microsoft Power BI Pro licence; these features are covered in the curriculum where available, and SI Analytics will confirm the scope of publishing activities for your cohort.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">I already know Excel. Will Module 4 still be useful?</div>
+          <div class="faq-a">Module 4 is designed as an intermediate-level module, not a basic introduction. If you use Excel regularly but have not worked extensively with structured table referencing, XLOOKUP, INDEX/MATCH, nested conditional logic, or audit-safe PivotTable practice, you are likely to find the module both valuable and challenging. Learners with strong existing Excel skills typically still benefit from the analytical framing and workflow integration that Module 4 provides.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">What kind of datasets will we work with?</div>
+          <div class="faq-a">Modules 1 to 5 use structured datasets provided as part of the programme materials — designed to reflect the kinds of data professionals encounter in public health, business, finance, and development contexts. For the capstone, learners may use a dataset provided by SI Analytics or a suitable publicly available dataset relevant to their professional domain. Learners wishing to use organisational data should ensure they have appropriate approval to do so.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">What support is available if I am struggling?</div>
+          <div class="faq-a">Optional help sessions are available every module for questions, troubleshooting, and additional practice. Instructor feedback on assignments provides structured guidance on areas for improvement. The cohort community also serves as a peer support resource. If you are experiencing significant difficulty, contact your instructor or SI Analytics directly.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Will I receive a certificate?</div>
+          <div class="faq-a">Learners who successfully meet the programme's completion requirements receive an SI Analytics Certificate of Completion. The recommended minimum threshold is 75% overall (subject to final confirmation). The certificate confirms participation and performance in the Accelerated Data Analytics Bootcamp and is awarded by SI Analytics.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">How is the capstone project assessed?</div>
+          <div class="faq-a">The capstone accounts for 35% of the overall grade and is assessed against a published rubric covering problem definition, data preparation, analytical accuracy, data modelling, dashboard functionality, visual design, insight quality, documentation, and presentation quality. Full rubric details are provided on page 14 of this brochure and will be shared with learners at the start of Module 5.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer">
+    <span class="ftr-left">Accelerated Data Analytics Bootcamp</span>
+    <span class="ftr-right">www.sianalytics.org</span>
+    <span class="page-num">17</span>
+  </div>
+</div>
+
+
+<!-- ============================================================
+     PAGE 18 — CONTACT & ENROLMENT
+============================================================ -->
+<div class="page" id="contact-page">
+  <div class="contact-hero">
+    <div style="margin-bottom:5mm;">
+      <svg width="120" height="38" viewBox="0 0 260 84" xmlns="http://www.w3.org/2000/svg" aria-label="SI Analytics logo">
+        <circle cx="12" cy="52" r="5" fill="rgba(255,255,255,.7)"/>
+        <circle cx="22" cy="44" r="4.5" fill="rgba(255,255,255,.65)"/>
+        <circle cx="30" cy="58" r="3.5" fill="rgba(255,255,255,.55)"/>
+        <circle cx="18" cy="64" r="3" fill="rgba(255,255,255,.45)"/>
+        <circle cx="8" cy="66" r="2.5" fill="rgba(255,255,255,.35)"/>
+        <circle cx="28" cy="68" r="2" fill="rgba(255,255,255,.3)"/>
+        <circle cx="36" cy="50" r="3" fill="rgba(255,255,255,.45)"/>
+        <path d="M 38 20 Q 120 -10 200 18" stroke="rgba(255,255,255,.8)" stroke-width="9" fill="none" stroke-linecap="round"/>
+        <text x="42" y="46" font-family="Segoe UI,Arial,sans-serif" font-size="24" font-weight="800" fill="white">SI Analytics</text>
+        <text x="42" y="60" font-family="Segoe UI,Arial,sans-serif" font-size="9" fill="rgba(255,255,255,.7)" font-style="italic">Empowering decisions, driving innovation</text>
+      </svg>
+    </div>
+    <div class="contact-hero-title">Ready to Begin Your Analytics Journey?</div>
+    <div class="contact-hero-sub">Whether you are an individual learner, an organisational sponsor, or a workforce development partner, we welcome your enquiry. Visit our website or reach out directly to learn more about the Accelerated Data Analytics Bootcamp.</div>
+    <a href="https://www.sianalytics.org" class="btn-cta">Visit www.sianalytics.org</a>
+  </div>
+
+  <div class="contact-body">
+    <div class="contact-grid">
+      <div class="contact-item">
+        <div class="contact-item-label">🌐 Website</div>
+        <div class="contact-item-val"><a href="https://www.sianalytics.org">www.sianalytics.org</a></div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-item-label">📧 Email</div>
+        <div class="contact-item-val"><a href="mailto:contact@sianalytics.org">contact@sianalytics.org</a></div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-item-label">▶ YouTube</div>
+        <div class="contact-item-val"><a href="https://www.youtube.com/@SIAnalyticsLab">@SIAnalyticsLab</a></div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-item-label">🔗 LinkedIn</div>
+        <div class="contact-item-val"><a href="https://www.linkedin.com/company/strategic-insights-analytics-sia/">Strategic Insights and Analytics (SI Analytics)</a></div>
+      </div>
+    </div>
+
+    <div class="contact-cta-box">
+      <div class="contact-cta-title">Enrol as an Individual Learner</div>
+      <p>Visit the SI Analytics website for current cohort information, programme dates, and enrolment guidance. All enquiries regarding suitability, software requirements, and organisational group bookings are welcomed via email.</p>
+      <a href="https://www.sianalytics.org" class="btn-cta">Start at sianalytics.org</a>
+    </div>
+
+    <div style="margin-top:6mm; display:grid; grid-template-columns:1fr 1fr; gap:4mm;">
+      <div style="background:rgba(255,255,255,.06); border:0.3mm solid rgba(255,255,255,.12); border-radius:2mm; padding:4mm 5mm;">
+        <div style="color:var(--teal-light); font-size:7.5pt; font-weight:700; text-transform:uppercase; letter-spacing:.08em; margin-bottom:2mm;">For Organisations &amp; Sponsors</div>
+        <div style="color:rgba(255,255,255,.75); font-size:8pt; line-height:1.6;">If you are considering sponsoring staff, running a cohort within your organisation, or partnering with SI Analytics on workforce analytics development, please contact us directly at <a href="mailto:contact@sianalytics.org" style="color:var(--teal-light);">contact@sianalytics.org</a>.</div>
+      </div>
+      <div style="background:rgba(255,255,255,.06); border:0.3mm solid rgba(255,255,255,.12); border-radius:2mm; padding:4mm 5mm;">
+        <div style="color:var(--teal-light); font-size:7.5pt; font-weight:700; text-transform:uppercase; letter-spacing:.08em; margin-bottom:2mm;">For Training Partners</div>
+        <div style="color:rgba(255,255,255,.75); font-size:8pt; line-height:1.6;">Universities, professional associations, and workforce development organisations interested in partnership arrangements or cohort delivery are invited to contact SI Analytics to discuss collaborative opportunities.</div>
+      </div>
+    </div>
+
+    <div style="margin-top:6mm; text-align:center; border-top:0.3mm solid rgba(255,255,255,.12); padding-top:5mm;">
+      <div style="color:var(--teal-light); font-size:9pt; font-weight:700; margin-bottom:1.5mm;">From Curiosity to Capability. From Data to Decisions.</div>
+      <div style="color:rgba(255,255,255,.5); font-size:7.5pt;">Accelerated Data Analytics Bootcamp · SI Analytics · www.sianalytics.org · contact@sianalytics.org</div>
+      <div style="color:rgba(255,255,255,.35); font-size:6.5pt; margin-top:2mm;">This document represents the proposed curriculum design for the SI Analytics Accelerated Data Analytics Bootcamp. All programme specifications, grading policies, and assessment requirements are subject to final approval by SI Analytics and should be confirmed at the time of enrolment. No tuition fees, cohort dates, named instructors, accreditation status, or employment outcomes are implied or guaranteed by this brochure.</div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
